@@ -2,60 +2,86 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f8f7f2">
-  <meta name="description" content="Un cours interactif d’anglais du débutant à l’avancé : vocabulaire, 12 formes de temps, conjugaison des verbes, phrases utiles, prononciation et quiz, sans compte ni IA." />
-  <meta property="og:title" content="Anglais sans délai — le cours interactif complet" />
-  <meta property="og:description" content="Vocabulaire, grammaire, conjugaison dans les 12 formes, phrases et prononciation. Gratuit, sans compte, utilisable à son rythme." />
-  <meta property="og:type" content="website" />
-  <title>Anglais sans délai — apprendre vite, retenir longtemps</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%235449d8'/%3E%3Cpath d='M15 22h34M15 32h25M15 42h30' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="app.js"></script>
-  <script defer src="advanced.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Anglais Éclair</title>
+  <meta name="description" content="Apprends l’anglais à la vitesse de l’éclair : 1 500 mots en images, les 12 temps, 190 verbes irréguliers, jeux, révisions intelligentes et programme jour par jour. Gratuit, sans compte, sans IA.">
+  <meta name="theme-color" content="#3d5afe">
+  <meta property="og:title" content="Anglais Éclair ⚡ L’anglais sans délai">
+  <meta property="og:description" content="1 500 mots en images, les 12 temps, les verbes irréguliers, des jeux et un programme jour par jour. Gratuit et sans compte.">
+  <meta property="og:type" content="website">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+  <link rel="apple-touch-icon" href="assets/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Nunito:wght@400;600;800&family=Unbounded:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="app">
-  <aside class="side">
-    <a class="brand" href="#home" aria-label="Anglais sans délai, accueil"><span class="brand-icon">Aa</span><span>Anglais sans<br>délai</span></a>
-    <div><div class="nav-label">APPRENDRE</div><nav class="nav" aria-label="Sections du cours" id="sideNav">
-      <button class="active" data-view="home"><span class="ico">⌂</span>Aujourd’hui</button>
-      <button data-view="words"><span class="ico">✳</span>Vocabulaire</button>
-      <button data-view="grammar"><span class="ico">◷</span>Grammaire & temps</button>
-      <button data-view="verbs"><span class="ico">↗</span>Verbes irréguliers</button>
-      <button data-view="speak"><span class="ico">☏</span>Phrases utiles</button>
-      <button data-view="sounds"><span class="ico">♫</span>Prononciation</button>
-      <button data-view="quiz"><span class="ico">✎</span>Quiz & défis</button>
-    </nav></div>
-    <div class="side-note"><strong>🌱 À ton rythme</strong>Pas de compte, pas d’IA : tes favoris et tes progrès restent sur cet appareil.</div>
-    <div class="side-foot">Fait pour apprendre, pas pour bachoter.</div>
-  </aside>
-  <main class="main">
-    <div class="top"><div class="crumb">Mon espace <span>›</span> <b id="crumb">Aujourd’hui</b></div><div class="streak"><span>🔥</span><b id="streak">1 jour de suite</b></div></div>
-    <section class="view active" id="view-home" aria-labelledby="homeTitle">
-      <div class="greet"><div><h1 id="homeTitle">Salut, on s’y met ? 👋</h1><p>Quelques minutes aujourd’hui, un vrai pas en avant.</p></div><div class="level">DU DÉBUTANT À L’AVANCÉ</div></div>
-      <article class="hero"><div class="hero-copy"><div class="eyebrow">TA MINI-LEÇON · 5 MIN</div><h2>Dire ce que tu fais<br>tous les jours</h2><p>Le présent simple, c’est la base pour parler de tes habitudes, de tes goûts et de ta routine.</p><button class="primary" data-go="grammar">Découvrir le présent simple <span>→</span></button></div>
-        <svg class="art" viewBox="0 0 220 170" role="img" aria-label="Illustration d’un calendrier et d’un soleil"><circle cx="132" cy="78" r="61" fill="#8b82f2"/><circle cx="150" cy="62" r="25" fill="#ffd574"/><path d="M41 48h95a9 9 0 0 1 9 9v86a9 9 0 0 1-9 9H41a9 9 0 0 1-9-9V57a9 9 0 0 1 9-9Z" fill="#fff"/><path d="M32 70h113" stroke="#d9d7fc" stroke-width="6"/><path d="M57 39v18m48-18v18" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M53 91h16m20 0h16m-52 21h16m20 0h16m-52 20h16m20 0h16" stroke="#d7d5eb" stroke-width="8" stroke-linecap="round"/><path d="m166 113 10 10 20-23" fill="none" stroke="#a9f0c2" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </article>
-      <div class="home-grid">
-        <section class="panel"><div class="panel-title"><h3>Le mot anglais du jour</h3><span class="tiny" id="wordOfDayCount">À retenir</span></div><div class="word"><div><div class="word-en" id="wordOfDay">actually</div><div class="word-fr" id="wordOfDayFr">en fait · à vrai dire</div></div></div><p class="example" id="wordOfDayExample">“I thought it was hard. <em>Actually</em>, it’s quite easy!”<br>Je pensais que c’était difficile. En fait, c’est assez facile !</p><button class="text-link" data-go="words">Ouvrir mes cartes de vocabulaire →</button></section>
-        <section class="panel"><div class="panel-title"><h3>Ton petit progrès</h3><span class="tiny" id="progressMood">À toi de jouer</span></div><div class="progress-row"><span>Leçons découvertes</span><b id="progressText">0 / 24</b></div><div class="bar"><i id="progressBar"></i></div><div class="progress-row secondary-row"><span>Mots que tu sais déjà</span><b id="knownText">0</b></div><div class="quick"><button data-go="words"><span class="qico">🧠</span>Apprendre des mots utiles</button><button data-go="quiz"><span class="qico">⚡</span>Faire un mini-défi</button></div></section>
+  <header class="topbar">
+    <div class="topbar-in">
+      <a class="brand" href="#accueil" aria-label="Anglais Éclair, accueil">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.5 2 4 13.5h6.5L9 22l10-12h-6.6L13.5 2Z" fill="var(--spark-base)" stroke="#1c1600" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
+        <span class="brand-name">Anglais Éclair<small>l’anglais sans délai</small></span>
+      </a>
+      <nav class="menus" id="menus" aria-label="Menu principal"></nav>
+      <div class="top-right">
+        <form class="top-search" id="topSearch" role="search">
+          <span aria-hidden="true">⌕</span>
+          <label class="sr-only" for="searchInput">Chercher un mot</label>
+          <input id="searchInput" type="search" placeholder="Chercher un mot…" autocomplete="off">
+        </form>
+        <a class="pill-stat xp" href="#stats" id="xpPill" title="Points du jour">⚡ 0</a>
+        <a class="pill-stat" href="#stats" id="streakPill" title="Série de jours">🔥 0</a>
+        <a class="icon-btn" href="#reglages" title="Réglages" aria-label="Réglages">⚙️</a>
+        <button class="icon-btn burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-controls="drawer" aria-expanded="false">☰</button>
       </div>
-      <section class="section-block"><div class="section-heading"><div><h2>Choisis ton prochain pas</h2><p>Tu peux passer d’une partie à l’autre, selon ton envie.</p></div></div><div class="path-grid">
-        <button class="path-card lavender" data-go="words"><span class="path-emoji">🧠</span><strong>Les mots du quotidien</strong><small>Famille, voyage, nourriture, émotions…</small><span class="card-arrow">→</span></button>
-        <button class="path-card peach" data-go="grammar"><span class="path-emoji">⏳</span><strong>Les temps, enfin clairs</strong><small>Quand les utiliser et comment les former.</small><span class="card-arrow">→</span></button>
-        <button class="path-card mint" data-go="verbs"><span class="path-emoji">🚀</span><strong>Les verbes essentiels</strong><small>Les formes irrégulières à connaître.</small><span class="card-arrow">→</span></button>
-      </div></section>
-    </section>
-    <section class="view" id="view-words" aria-labelledby="wordsTitle"><div class="greet"><div><div class="eyebrow dark-eyebrow">BANQUE DE MOTS</div><h1 id="wordsTitle">Du vocabulaire qui sert 🧠</h1><p>Lis l’anglais, essaie de deviner, puis retourne la carte.</p></div><div class="level" id="wordsKnownBadge">0 mots retenus</div></div><div class="panel word-work"><div class="toolbar"><label class="search"><span>⌕</span><input id="wordSearch" type="search" placeholder="Chercher un mot ou sa traduction…" aria-label="Chercher un mot"></label><label class="select-wrap"><span class="sr-only">Catégorie</span><select id="wordTopic"></select></label></div><div class="word-layout"><div class="flashcard" id="flashcard" aria-live="polite"></div><div class="word-list-wrap"><div class="list-heading"><strong>Dans cette catégorie</strong><span class="tiny" id="wordListCount"></span></div><div class="word-list" id="wordList"></div></div></div></div><p class="hint-line">💡 Astuce : invente une mini-scène avec le mot. Un contexte amusant aide souvent à mieux le retrouver.</p></section>
-    <section class="view" id="view-grammar" aria-labelledby="grammarTitle"><div class="greet"><div><div class="eyebrow dark-eyebrow">LES REPÈRES POUR FAIRE DES PHRASES</div><h1 id="grammarTitle">La grammaire sans brouillard ◷</h1><p>Les douze formes de référence, puis les autres règles pour construire des phrases.</p></div></div><div class="tense-roadmap"><div class="roadmap-heading"><div><h2>Les 12 formes à maîtriser</h2><p>Choisis une carte pour voir sa construction, ses usages et des exemples.</p></div><span>PRÉSENT · PASSÉ · FUTUR</span></div><div class="tense-grid" id="tenseGrid"></div></div><div class="topic-pills" id="grammarTopics"></div><div class="grammar-layout"><div class="lesson-list" id="grammarList"></div><article class="panel lesson-detail" id="grammarDetail"></article></div><div class="source-note">Point de précision : les « 12 temps » sont un classement pédagogique de trois repères temporels et quatre aspects. En grammaire, certaines références distinguent le présent et le passé comme temps grammaticaux; les formes en will sont construites avec un auxiliaire. Les formes du futur dépendent du sens. Sources : <a href="https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/present-tense" target="_blank" rel="noreferrer">présent</a> · <a href="https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/past-tense" target="_blank" rel="noreferrer">passé</a> · <a href="https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/talking-about-future" target="_blank" rel="noreferrer">futur</a> · <a href="https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/present-perfect" target="_blank" rel="noreferrer">present perfect</a> · <a href="https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/future-continuous-future-perfect" target="_blank" rel="noreferrer">future continuous / perfect</a> ↗</div></section>
-    <section class="view" id="view-verbs" aria-labelledby="verbsTitle"><div class="greet"><div><div class="eyebrow dark-eyebrow">FORMES · SENS · CONJUGAISON</div><h1 id="verbsTitle">Les verbes, sous toutes leurs formes ↗</h1><p>Retrouve les verbes irréguliers et conjugue un verbe dans les douze formes.</p></div></div><form class="verb-lab panel" id="conjugatorForm"><div class="lab-heading"><div><div class="eyebrow dark-eyebrow">CONJUGATEUR INTERACTIF</div><h2>Un verbe, tous les temps</h2><p>Essaie <em>work</em>, <em>go</em> ou <em>be</em>. Pour un irrégulier absent de la liste, ajoute ses formes.</p></div><span class="lab-badge">12 FORMES · 6 PERSONNES</span></div><div class="conjugator-fields"><label>Verbe à la base<input id="conjugatorBase" value="go" placeholder="ex. to learn" autocomplete="off" required></label><label>Prétérit si irrégulier <small>(facultatif)</small><input id="conjugatorPast" placeholder="ex. went" autocomplete="off"></label><label>Participe passé si irrégulier <small>(facultatif)</small><input id="conjugatorPart" placeholder="ex. gone" autocomplete="off"></label><label>Forme à afficher<select id="conjugatorTense"></select></label></div><div class="conjugator-actions"><button class="start-quiz" type="submit">Conjuguer →</button><span class="tiny" id="conjugatorStatus" role="status" aria-live="polite"></span></div><div class="conjugator-results" id="conjugatorResults" aria-live="polite"></div><p class="lab-note">Les verbes réguliers suivent les règles en -ed et -ing. Pour les irréguliers, le tableau ci-dessous fournit les formes connues; tu peux aussi saisir un prétérit et un participe particuliers.</p></form><div class="panel"><div class="toolbar"><label class="search"><span>⌕</span><input id="verbSearch" type="search" placeholder="Chercher un verbe ou son sens…" aria-label="Chercher un verbe"></label><label class="select-wrap"><span class="sr-only">Famille</span><select id="verbGroup"></select></label></div><div class="table-wrap"><table><thead><tr><th>Base</th><th>Past simple</th><th>Past participle</th><th>Sens</th><th></th></tr></thead><tbody id="verbRows"></tbody></table></div><div class="table-foot" id="verbCount"></div><div class="source-note">Les verbes irréguliers les plus fréquents et les variantes sont à vérifier selon le sens et la variété d’anglais. <a href="https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/irregular-verbs" target="_blank" rel="noreferrer">Référence du British Council ↗</a></div></div><div class="tip-card"><span>🧩</span><div><b>Une idée pour les retenir</b><p>Regroupe les formes qui se ressemblent : <em>sing–sang–sung</em>, <em>drink–drank–drunk</em>, <em>begin–began–begun</em>. Le rythme aide la mémoire.</p></div></div></section>
-    <section class="view" id="view-speak" aria-labelledby="speakTitle"><div class="greet"><div><div class="eyebrow dark-eyebrow">DES MOTS POUR LA VRAIE VIE</div><h1 id="speakTitle">Trouver ses mots, situation par situation ☏</h1><p>Des expressions naturelles, avec leur traduction et une façon de les prononcer.</p></div></div><div class="toolbar"><label class="search"><span>⌕</span><input id="phraseSearch" type="search" placeholder="Chercher une phrase…" aria-label="Chercher une phrase"></label><label class="select-wrap"><span class="sr-only">Situation</span><select id="phraseTopic"></select></label></div><div class="phrase-grid" id="phraseGrid"></div></section>
-    <section class="view" id="view-sounds" aria-labelledby="soundsTitle"><div class="greet"><div><div class="eyebrow dark-eyebrow">OBSERVER · ARTICULER · S’ENTRAÎNER</div><h1 id="soundsTitle">Rendre les sons moins intimidants ♫</h1><p>Des repères écrits pour comprendre les sons anglais et t’entraîner à les prononcer. Les accents varient : ces exemples sont des points de départ.</p></div></div><div class="sound-grid" id="soundGrid"></div><div class="panel sound-exercise"><div><div class="eyebrow dark-eyebrow">PETIT EXERCICE</div><h2>Répéter pour entraîner la bouche</h2><p>1. Lis la phrase lentement. 2. Répète-la à voix haute. 3. Recommence en suivant le rythme des mots. 4. Cache l’exemple et redis-le sans regarder.</p><p><b>Phrase modèle :</b> <em>Could you say that again, please?</em><br><span>Peux-tu répéter, s’il te plaît ?</span></p></div><div class="sound-illustration" aria-hidden="true">“<span>th</span>”<i>♪</i></div></div></section>
-    <section class="view" id="view-quiz" aria-labelledby="quizTitle"><div class="greet"><div><div class="eyebrow dark-eyebrow">SANS NOTE · JUSTE POUR FIXER LES IDÉES</div><h1 id="quizTitle">Un mini-défi ? ⚡</h1><p>Un mélange de mots, de verbes et de grammaire. La correction t’explique pourquoi.</p></div><div class="level" id="bestScore">Meilleur score : —</div></div><div class="quiz-shell panel" id="quizBox"></div><div class="quiz-note">Chaque essai est fabriqué à partir des leçons incluses dans cette page. Aucun compte ni service d’IA n’est utilisé.</div></section>
-    <footer class="footer"><span>Anglais sans délai · Le contenu reste sur ton appareil.</span><button class="text-link" id="resetProgress">Effacer mes progrès</button></footer>
-  </main>
-  <nav class="mobile-nav" aria-label="Navigation mobile"><button class="active" data-view="home"><span>⌂</span>Accueil</button><button data-view="words"><span>✳</span>Mots</button><button data-view="grammar"><span>◷</span>Temps</button><button data-view="verbs"><span>↗</span>Verbes</button><button data-view="speak"><span>☏</span>Phrases</button><button data-view="sounds"><span>♫</span>Sons</button><button data-view="quiz"><span>✎</span>Quiz</button></nav>
-</div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="drawer" aria-label="Menu">
+    <div class="drawer-head">
+      <strong class="brand-name">Menu</strong>
+      <button class="icon-btn" id="drawerClose" type="button" aria-label="Fermer le menu">✕</button>
+    </div>
+    <form id="drawerSearch" role="search" style="margin-bottom:10px">
+      <label class="sr-only" for="drawerSearchInput">Chercher un mot</label>
+      <input id="drawerSearchInput" type="search" placeholder="🔎 Chercher un mot, une phrase…" autocomplete="off">
+    </form>
+    <div id="drawerMenus"></div>
+  </aside>
+
+  <main class="page" id="app" tabindex="-1"></main>
+
+  <footer class="footer">
+    <span>⚡ Anglais Éclair · gratuit, sans compte, sans IA · tes progrès restent sur cet appareil.</span>
+    <span><a href="#reglages">Réglages</a> · <a href="#stats">Mes progrès</a></span>
+  </footer>
+
+  <nav class="tabbar" id="tabbar" aria-label="Navigation rapide">
+    <a href="#accueil" data-tab="accueil"><span>🏠</span>Accueil</a>
+    <a href="#vocabulaire" data-tab="vocabulaire"><span>🧠</span>Mots</a>
+    <a href="#temps" data-tab="temps"><span>⏳</span>Temps</a>
+    <a href="#jeux" data-tab="jeux"><span>🎮</span>Jeux</a>
+    <a href="#programme" data-tab="programme"><span>📅</span>Programme</a>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/data/vocab-1.js"></script>
+  <script src="assets/js/data/vocab-2.js"></script>
+  <script src="assets/js/data/vocab-3.js"></script>
+  <script src="assets/js/data/vocab-4.js"></script>
+  <script src="assets/js/data/grammar.js"></script>
+  <script src="assets/js/data/verbs.js"></script>
+  <script src="assets/js/data/expressions.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/views-learn.js"></script>
+  <script src="assets/js/views-grammar.js"></script>
+  <script src="assets/js/views-more.js"></script>
+  <script src="assets/js/games.js"></script>
+  <script src="assets/js/plan-settings.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

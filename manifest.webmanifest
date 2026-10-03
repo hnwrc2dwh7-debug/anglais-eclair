@@ -1,0 +1,12 @@
+{
+  "name": "Anglais Éclair",
+  "short_name": "Éclair",
+  "description": "L’anglais sans délai : mots en images, les 12 temps, verbes, jeux et programme jour par jour.",
+  "lang": "fr",
+  "start_url": "./#accueil",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f4fa",
+  "theme_color": "#3d5afe",
+  "icons": [{ "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

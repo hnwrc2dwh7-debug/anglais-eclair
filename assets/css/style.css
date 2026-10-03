@@ -439,6 +439,16 @@ table.data tr.known td { background: var(--good-soft); }
 .word-pills button { border: 1px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 5px 11px; font-weight: 600; font-size: .88rem; }
 .word-pills button:hover { border-color: var(--accent); background: var(--accent-soft); }
 
+/* Histoires */
+.story { display: grid; gap: 4px; }
+.story-line { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; padding: 10px; border-radius: var(--radius-sm); cursor: pointer; transition: background .2s; }
+.story-line:hover { background: var(--surface-2); }
+.story-line b { font-weight: 600; font-size: 1.08rem; display: block; }
+.story-line i { display: block; color: var(--muted); font-style: normal; font-size: .92rem; }
+.hide-fr .story-line i { display: none; }
+.hide-fr .story-line.show-fr i { display: block; }
+.story-line.reading { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+
 /* ---------- Jeux ---------- */
 .game-card {
   text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);

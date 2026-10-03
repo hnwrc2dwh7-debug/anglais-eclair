@@ -71,6 +71,7 @@ E.route("accueil", () => {
     <div class="ring-wrap">${ring(pct, d.xp, `sur ${goal} points`)}</div>
   </section>
 
+  ${!Object.keys(E.state.srs).length && !E.state.ui.testDone ? `<section class="card row between" style="background:var(--spark-soft)"><span><b>🎓 Première visite ?</b> Fais le test de niveau (3 minutes) : le site choisira les bons mots pour toi.</span><a class="btn primary" href="#test">Faire le test →</a></section>` : ""}
   <div class="stat-row">
     <div class="stat"><span class="s-ico">🔥</span><b>${E.streak()}</b><span>jours de suite</span></div>
     <div class="stat"><span class="s-ico">🧠</span><b>${mastered}</b><span>mots maîtrisés · ${started} vus</span></div>
@@ -116,7 +117,8 @@ E.route("accueil", () => {
     <div class="tiles">
       ${[["vocabulaire", "🧠", "Vocabulaire", `${E.THEMES.length} thèmes en images`], ["temps", "⏳", "Les 12 temps", "Enfin clairs, avec des frises"], ["jeux", "🎮", "Jeux & quiz", "Image, dictée, pendu, memory…"],
         ["verbes", "🔁", "Verbes irréguliers", `${window.IRREGULARS.length} verbes`], ["phrases", "💬", "Phrases utiles", "Restaurant, voyage, travail…"], ["phrasal", "🧲", "Phrasal verbs", `${window.PHRASALS.length} à connaître`],
-        ["prononciation", "👄", "Prononciation", "Les sons qui piègent"], ["programme", "📅", "Mon programme", `${s.planLength} jours, à ton rythme`]]
+        ["prononciation", "👄", "Prononciation", "Les sons qui piègent"], ["programme", "📅", "Mon programme", `${s.planLength} jours, à ton rythme`],
+        ["histoires", "📖", "Petites histoires", `${(window.STORIES || []).length} textes à écouter`], ["test", "🎓", "Test de niveau", "Ton niveau en 3 minutes"]]
         .map(([h, i, t2, sub]) => `<a class="tile" href="#${h}"><span class="t-emoji">${i}</span><b>${t2}</b><small>${sub}</small></a>`).join("")}
     </div>
   </section>`;

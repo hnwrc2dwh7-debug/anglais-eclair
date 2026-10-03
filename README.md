@@ -6,6 +6,8 @@ Un site complet pour apprendre l’anglais vite, **gratuit, sans compte, sans IA
 - **Les 12 temps** : tableau, frise du temps, construction, pièges, exemples à écouter, exercices corrigés
 - **27 leçons de grammaire** (conditionnels, modaux, passif, comparatifs, discours rapporté…)
 - **Conjugueur** pour n’importe quel verbe (190 irréguliers connus, phrasal verbs compris)
+- **8 petites histoires** à écouter phrase par phrase (A1 → B2) avec questions de compréhension
+- **Test de niveau** en 3 minutes qui adapte le site
 - **Phrases utiles**, **phrasal verbs**, **expressions imagées**, **faux amis**, **anglais familier**, **prononciation**
 - **17 jeux** : image → mot, dictée, défi éclair 60 s, vrai/faux, memory, pendu, mot mélangé, quiz des temps…
 - **Cartes mémoire avec répétition espacée** (révisions du jour)

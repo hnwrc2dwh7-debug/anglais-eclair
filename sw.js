@@ -1,9 +1,9 @@
 /* Anglais Éclair — fonctionnement hors connexion. */
-const CACHE = "anglais-eclair-v1";
+const CACHE = "anglais-eclair-v2";
 const FILES = [
   "./", "./index.html", "./manifest.webmanifest", "./assets/icon.svg", "./assets/css/style.css",
   "./assets/js/data/vocab-1.js", "./assets/js/data/vocab-2.js", "./assets/js/data/vocab-3.js", "./assets/js/data/vocab-4.js",
-  "./assets/js/data/grammar.js", "./assets/js/data/verbs.js", "./assets/js/data/expressions.js",
+  "./assets/js/data/grammar.js", "./assets/js/data/stories.js", "./assets/js/views-stories.js", "./assets/js/data/verbs.js", "./assets/js/data/expressions.js",
   "./assets/js/core.js", "./assets/js/views-learn.js", "./assets/js/views-grammar.js", "./assets/js/views-more.js",
   "./assets/js/games.js", "./assets/js/plan-settings.js", "./assets/js/main.js"
 ];

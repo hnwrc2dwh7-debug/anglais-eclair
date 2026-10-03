@@ -218,7 +218,8 @@ E.MENU = [
     ["temps", "⏳", "Les 12 temps", "Tableau, frises, exercices"],
     ["grammaire", "📐", "Grammaire", "Conditionnels, modaux, passif…"],
     ["verbes", "🔁", "Verbes irréguliers", "190 verbes à écouter"],
-    ["conjugueur", "🧩", "Conjugueur", "Un verbe, tous les temps"]] },
+    ["conjugueur", "🧩", "Conjugueur", "Un verbe, tous les temps"],
+    ["histoires", "📖", "Petites histoires", "Lire et écouter, A1 → B2"]] },
   { label: "S’entraîner", items: [
     ["revisions", "🗂️", "Révisions du jour", "Les mots à revoir aujourd’hui"],
     ["apprendre", "✨", "Nouveaux mots du jour", "Ta dose quotidienne"],
@@ -233,6 +234,7 @@ E.MENU = [
     ["familier", "😎", "Anglais familier", "gonna, mate, LOL…"],
     ["prononciation", "👄", "Prononciation", "Sons, accent, paires de mots"]] },
   { label: "Mon parcours", items: [
+    ["test", "🎓", "Test de niveau", "3 minutes pour savoir où tu en es"],
     ["programme", "📅", "Programme jour par jour", "De 7 à 180 jours"],
     ["stats", "📊", "Mes progrès", "Série, points, maîtrise"],
     ["favoris", "⭐", "Mes favoris", "Tes mots mis de côté"],

@@ -28,11 +28,23 @@ E.planItem = idx => {
   const game = E.GAME.get(review ? "eclair" : GAME_ROTATION[idx % GAME_ROTATION.length]);
   return { index: idx, review, theme, lesson, game };
 };
-E.planDayIndexFor = num => { const i = E.planDays().indexOf(num); return i >= 0 ? i : null; };
+E.planDayIndexFor = num => { if (!E.S().useDays) return null; const i = E.planDays().indexOf(num); return i >= 0 ? i : null; };
+E.nextLesson = () => { const all = lessonOrder(), lv = E.lvl(E.S().level); return all.find(l => !E.state.lessons[l.id] && E.lvl(l.level) <= Math.max(lv, 1)) || all.find(l => !E.state.lessons[l.id]) || all[E.today() % all.length]; };
+E.gameOfDay = () => E.GAME.get(GAME_ROTATION[E.today() % GAME_ROTATION.length]);
 E.planToday = () => { const i = E.planDayIndexFor(E.today()); return i === null ? null : E.planItem(i); };
 
 E.route("programme", param => {
-  const s = E.S(), days = E.planDays(), t = E.today();
+  const s = E.S();
+  if (!s.useDays) {
+    E.after(() => $("#enableDays").addEventListener("click", () => { s.useDays = true; s.planStart = E.dayKey(); E.state.plan.done = []; E.save(); E.toast("Programme activé 📅"); E.rerender(); }));
+    return `${E.head("Facultatif", "Programme jour par jour 📅", "Par défaut, Anglais Éclair n’impose aucun jour : tu apprends quand tu veux, autant que tu veux. Si tu aimes être guidé, tu peux activer un programme.")}
+    <section class="card stack">
+      <h2>Comment ça marche ?</h2>
+      <ul class="list-clean"><li>Tu choisis tes jours d’étude (par exemple lundi, mercredi et samedi) et une durée de 7 à 180 jours.</li><li>Chaque jour d’étude te propose un thème de vocabulaire, une leçon de grammaire et un jeu.</li><li>Un jour sur sept est consacré aux révisions.</li><li>Les jours de repos ne cassent pas ta série. Tu peux tout désactiver à tout moment.</li></ul>
+      <div class="row"><button class="btn primary big" type="button" id="enableDays">📅 Activer un programme</button><a class="btn ghost" href="#accueil">Non merci, je reste libre</a></div>
+    </section>`;
+  }
+  const days = E.planDays(), t = E.today();
   const done = new Set(E.state.plan.done);
   const sel = param !== "" && !isNaN(param) ? Number(param) : (E.planDayIndexFor(t) ?? days.findIndex(n => n >= t));
   const end = days[days.length - 1];
@@ -60,6 +72,7 @@ E.route("programme", param => {
     });
     ["#pl", "#pxp", "#pnw"].forEach(id => $(id).addEventListener("input", e => { s[{ "#pl": "planLength", "#pxp": "dailyXp", "#pnw": "newWords" }[id]] = Number(e.target.value); E.save(); E.rerender(); }));
     $("#pst").addEventListener("change", e => { if (e.target.value) { s.planStart = e.target.value; E.state.plan.done = []; E.save(); E.rerender(); } });
+    $("#disableDays").addEventListener("click", () => { s.useDays = false; E.save(); E.toast("Programme désactivé : tu apprends librement."); E.rerender(); });
     $("#prestart").addEventListener("click", () => { s.planStart = E.dayKey(); E.state.plan.done = []; E.save(); E.toast("Programme relancé à partir d’aujourd’hui 🚀"); E.rerender(); });
   });
   const order = [1, 2, 3, 4, 5, 6, 0];
@@ -72,7 +85,7 @@ E.route("programme", param => {
       ${E.select("pnw", [3, 5, 8, 10, 15, 20, 30, 50].map(n => [n, `${n} nouveaux mots`]), s.newWords, "Nouveaux mots par jour")}
     </div>
     <div class="field">Mes jours d’étude <small>Touche un jour pour l’activer ou le désactiver</small><div class="daypick">${order.map(d => `<button type="button" data-day="${d}" class="${s.studyDays.includes(d) ? "on" : ""}" aria-pressed="${s.studyDays.includes(d)}">${E.DAYS_SHORT[d]}</button>`).join("")}</div></div>
-    <div class="row between"><span class="muted">${E.plural(s.studyDays.length, "jour")} d’étude par semaine · fin prévue le <b>${end ? E.fmtDay(end, true) : "—"}</b></span><button class="btn small ghost" type="button" id="prestart">↻ Recommencer à partir d’aujourd’hui</button></div>
+    <div class="row between"><span class="muted">${E.plural(s.studyDays.length, "jour")} d’étude par semaine · fin prévue le <b>${end ? E.fmtDay(end, true) : "—"}</b></span><span class="row"><button class="btn small ghost" type="button" id="prestart">↻ Recommencer aujourd’hui</button><button class="btn small ghost" type="button" id="disableDays">✕ Désactiver le programme</button></span></div>
     <div class="row between"><b>${done.size} / ${days.length} jours faits</b><span class="muted">${Math.round(done.size / Math.max(1, days.length) * 100)} %</span></div>
     <div class="bar spark"><i style="width:${done.size / Math.max(1, days.length) * 100}%"></i></div>
   </section>
@@ -139,6 +152,7 @@ E.route("reglages", anchor => {
       const k = el.dataset.set, d = E.DEFAULTS[k];
       s[k] = el.type === "checkbox" ? el.checked : typeof d === "number" ? Number(el.value) : el.value;
       apply();
+      if (k === "useDays") { if (s.useDays) { s.planStart = E.dayKey(); E.state.plan.done = []; E.save(); } E.rerender(); return; }
       if (k === "rate") $("#rateVal").textContent = `${Number(el.value).toFixed(2)}×`;
     });
     view.addEventListener("click", e => {
@@ -164,7 +178,7 @@ E.route("reglages", anchor => {
       if (e.target.closest("#doReset")) { E.resetAll(); E.toast("Tout a été remis à zéro."); E.go("accueil"); return; }
     });
     $("#set-name").addEventListener("input", e => { s.name = e.target.value.slice(0, 30); E.save(); });
-    $("#set-reminder").addEventListener("input", e => { s.reminder = e.target.value; E.save(); });
+    $("#set-reminder")?.addEventListener("input", e => { s.reminder = e.target.value; E.save(); });
     if (anchor) { const el = $("#s-" + anchor); if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 60); }
   });
   return `${E.head("Personnalise tout", "Réglages ⚙️", "Tes jours, ton rythme, tes couleurs, ta voix. Les changements sont enregistrés tout de suite sur cet appareil.")}
@@ -182,7 +196,8 @@ E.route("reglages", anchor => {
         </div></section>
 
       <section class="card stack" id="s-rythme"><h2>📅 Jours & rythme</h2>
-        <div class="field">Mes jours d’étude<div class="daypick">${order.map(d => `<button type="button" data-day="${d}" class="${s.studyDays.includes(d) ? "on" : ""}">${E.DAYS_SHORT[d]}</button>`).join("")}</div></div>
+        ${sw("useDays", "Programme avec des jours d’étude (facultatif)", "Désactivé : tu apprends quand tu veux, sans calendrier. Activé : un plan guidé selon tes jours.")}
+        ${s.useDays ? `<div class="field">Mes jours d’étude<div class="daypick">${order.map(d => `<button type="button" data-day="${d}" class="${s.studyDays.includes(d) ? "on" : ""}">${E.DAYS_SHORT[d]}</button>`).join("")}</div></div>
         <div class="grid g3">
           ${sel("dailyXp", [[30, "30 points · 5 min"], [50, "50 points · 8 min"], [100, "100 points · 15 min"], [150, "150 points · 20 min"], [200, "200 points · 30 min"], [300, "300 points · 45 min"], [500, "500 points · 1 h et plus"]], "Objectif quotidien")}
           ${sel("newWords", [3, 5, 8, 10, 15, 20, 30, 50].map(n => [n, `${n} mots`]), "Nouveaux mots par jour")}
@@ -190,7 +205,10 @@ E.route("reglages", anchor => {
           <label class="field" for="set-planStart">Début du programme<input type="date" id="set-planStart" data-set="planStart" value="${esc(s.planStart)}"></label>
           <label class="field" for="set-reminder">Mon heure de rendez-vous<input type="time" id="set-reminder" value="${esc(s.reminder)}"></label>
         </div>
-        ${sw("restKeepsStreak", "Les jours de repos ne cassent pas ma série", "Seuls tes jours d’étude comptent pour la série 🔥")}
+        ${sw("restKeepsStreak", "Les jours de repos ne cassent pas ma série", "Seuls tes jours d’étude comptent pour la série 🔥")}` : `<div class="grid g2">
+          ${sel("dailyXp", [[30, "30 points · 5 min"], [50, "50 points · 8 min"], [100, "100 points · 15 min"], [150, "150 points · 20 min"], [200, "200 points · 30 min"], [300, "300 points · 45 min"], [500, "500 points · 1 h et plus"]], "Objectif quotidien (indicatif)")}
+          ${sel("newWords", [3, 5, 8, 10, 15, 20, 30, 50].map(n => [n, `${n} mots`]), "Nouveaux mots par jour")}
+        </div>`}
       </section>
 
       <section class="card stack" id="s-apparence"><h2>🎨 Apparence</h2>

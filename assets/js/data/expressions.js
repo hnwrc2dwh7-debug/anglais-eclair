@@ -155,7 +155,7 @@ look for|chercher|I'm looking for my keys.
 look after|s'occuper de|She looks after her little brother.
 look forward to|avoir hâte de|I'm looking forward to the holidays.
 look up|chercher (une info)|Look it up in the dictionary.
-find out|découvrir / apprendre|I found out the truth.
+find out|découvrir / se renseigner|I found out the truth.
 turn on|allumer|Turn on the light.
 turn off|éteindre|Turn off your phone.
 turn up|monter (le son) / arriver|Turn up the music! He turned up late.
@@ -178,7 +178,6 @@ get back|revenir / récupérer|When did you get back?
 break down|tomber en panne|My car broke down.
 break up|rompre|They broke up.
 fill in|remplir (un formulaire)|Fill in this form.
-find out|se renseigner|Find out more online.
 grow up|grandir|I grew up in Lyon.
 hang out|traîner|We hang out at the park.
 hang up|raccrocher|Don't hang up!
@@ -222,7 +221,7 @@ cut down on|réduire|Cut down on sugar.
 /* Expressions idiomatiques. */
 window.IDIOMS = P(`
 It's raining cats and dogs.|Il pleut des cordes.|🌧️
-Break a leg!|Merde ! (bonne chance)|🎭
+Break a leg!|Bonne chance ! (avant un spectacle, un examen)|🎭
 A piece of cake.|C'est du gâteau / facile.|🍰
 Once in a blue moon.|Tous les 36 du mois.|🌕
 To cost an arm and a leg.|Coûter les yeux de la tête.|💸
@@ -268,7 +267,7 @@ Easier said than done.|Plus facile à dire qu'à faire.|😅
 To be a couch potato.|Être un pantouflard.|🛋️
 Let's play it by ear.|On verra sur le moment.|🎶
 To hit the sack.|Aller se coucher.|🛏️
-To cut corners.|Bâcler / faire des économies.|✂️
+To cut corners.|Bâcler (pour gagner du temps ou de l’argent).|✂️
 To get the hang of it.|Prendre le coup de main.|👌
 Speak of the devil!|Quand on parle du loup !|😈
 `);
@@ -307,7 +306,7 @@ window.FALSE_FRIENDS = [
 ["to demand","exiger","demander → to ask"],
 ["a novel","un roman","une nouvelle → a short story / news"],
 ["money","argent (monnaie)","monnaie (rendue) → change"],
-["Parents","parents (père et mère)","parents (famille) → relatives"],
+["parents","parents (père et mère)","parents (la famille au sens large) → relatives"],
 ["photograph","photo","photographe → photographer"],
 ["to resume","reprendre","résumer → to sum up"],
 ["résumé (US)","CV","résumé → summary"],
@@ -367,7 +366,7 @@ window.SOUNDS = [
 { symbol: "ə", title: "Le schwa", text: "La voyelle la plus fréquente : un « e » très court et relâché dans les syllabes faibles.", words: ["about", "banana", "teacher", "doctor", "the"], hint: "Les petits mots (a, to, of, for) se réduisent souvent au schwa." },
 { symbol: "iː / ɪ", title: "Sheep ou ship ?", text: "Le i long de sheep et le i court de ship changent le sens du mot.", words: ["sheep", "ship", "leave", "live", "seat", "sit"], hint: "Exagère la longueur : sheeeep, puis ship très bref." },
 { symbol: "æ", title: "Le a de cat", text: "Bouche bien ouverte, entre « a » et « è ».", words: ["cat", "black", "man", "apple", "hat"], hint: "Compare cat et cut, hat et hut." },
-{ symbol: "ʌ", title: "Le u de cup", text: "Un « a » court, comme dans « heu ».", words: ["cup", "bus", "love", "money", "sun"], hint: "Love et money s’écrivent avec o, mais se prononcent avec ce son." },
+{ symbol: "ʌ", title: "Le u de cup", text: "Un son bref et sourd, entre le « a » de « patte » et le « eu » de « heure ».", words: ["cup", "bus", "love", "money", "sun"], hint: "Love et money s’écrivent avec o, mais se prononcent avec ce son." },
 { symbol: "uː / ʊ", title: "Food ou foot ?", text: "Long dans food, court dans foot.", words: ["food", "moon", "foot", "book", "good"], hint: "Pull et pool ne sonnent pas pareil." },
 { symbol: "-ed", title: "Trois façons de dire -ed", text: "Le prétérit régulier se prononce /t/, /d/ ou /ɪd/.", words: ["worked", "played", "wanted", "stopped", "needed"], hint: "On ajoute une syllabe seulement après t ou d : wan-ted, nee-ded." },
 { symbol: "ˈ", title: "L’accent tonique", text: "Dans chaque mot long, une syllabe est plus forte. Se tromper d’accent gêne plus qu’une mauvaise voyelle.", words: ["photograph", "photographer", "important", "comfortable", "vegetable"], hint: "comFORtable ? Non : COMF-ta-ble !" },

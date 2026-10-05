@@ -127,7 +127,7 @@ V("house", "Maison & pièces", "🏠", "A1", "Maison", `
 🏘️|neighbour|voisin(e)|My neighbour is noisy.|Mon voisin est bruyant.
 💰|rent|loyer / louer|The rent is too high.|Le loyer est trop élevé.
 🚚|to move (house)|déménager|We moved last year.|On a déménagé l’an dernier.
-🧹|to clean|nettoyer|Clean your room!|Range ta chambre !
+🧹|to clean|nettoyer|Clean the kitchen!|Nettoie la cuisine !
 🛏️|to make the bed|faire le lit|I make my bed every morning.|Je fais mon lit tous les matins.
 `);
 
@@ -214,7 +214,7 @@ V("weather", "Météo", "⛅", "A1", "Nature", `
 🌈|rainbow|arc-en-ciel|Look, a rainbow!|Regarde, un arc-en-ciel !
 🧊|ice / icy|glace / verglacé|The roads are icy.|Les routes sont verglacées.
 🌡️|temperature|température|The temperature is 20 degrees.|Il fait 20 degrés.
-🔥|hot|très chaud|It's so hot!|Il fait si chaud !
+🔥|hot|chaud / très chaud|It's so hot!|Il fait si chaud !
 😎|warm|chaud (agréable)|A warm evening.|Une soirée douce.
 🍃|cool|frais|It's cool outside.|Il fait frais dehors.
 🥶|cold|froid|It's freezing cold.|Il fait un froid glacial.
@@ -321,9 +321,9 @@ V("jobs", "Métiers", "👩‍⚕️", "A1", "Études & travail", `
 🎬|actor / actress|acteur / actrice|A famous actress.|Une actrice célèbre.
 ✍️|writer|écrivain|My favourite writer.|Mon écrivain préféré.
 📰|journalist|journaliste|A journalist asked questions.|Un journaliste a posé des questions.
-✈️|pilot|pilote|The pilot speaks.|Le pilote parle.
+✈️|pilot|pilote|The pilot is speaking.|Le pilote parle.
 🚕|driver|chauffeur / conducteur|A taxi driver.|Un chauffeur de taxi.
-💇|hairdresser|coiffeur / coiffeuse|I go to the hairdresser.|Je vais chez le coiffeur.
+💇|hairdresser|coiffeur / coiffeuse|I go to the hairdresser's.|Je vais chez le coiffeur.
 🧑‍🍳|waiter / waitress|serveur / serveuse|The waiter brought the menu.|Le serveur a apporté le menu.
 🛒|shop assistant|vendeur / vendeuse|Ask the shop assistant.|Demande au vendeur.
 📮|postman|facteur|The postman is late.|Le facteur est en retard.

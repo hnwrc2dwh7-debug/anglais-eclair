@@ -39,7 +39,7 @@ E.CATS = [...new Set(E.THEMES.map(t => t.cat))];
 const KEY = "anglais-eclair-v1";
 E.DEFAULTS = {
   name: "", level: "A1", goal: "tout",
-  studyDays: [1, 2, 3, 4, 5, 6], restKeepsStreak: true,
+  useDays: false, studyDays: [1, 2, 3, 4, 5, 6], restKeepsStreak: true,
   dailyXp: 100, newWords: 10, planLength: 30, planStart: E.dayKey(), reminder: "19:00",
   accent: "eclair", theme: "auto", size: "m", font: "moderne", shape: "arrondi", motion: true, imgSize: "m", showImages: true,
   cardDir: "en-fr", showExample: true, quizLen: 10, flashTime: 60, quizLevel: "all", autoplay: true, strict: false, blurFr: false,
@@ -80,7 +80,8 @@ E.addXp = (n, kind) => {
   }
   E.save(); E.updatePills();
 };
-E.isStudyDay = num => E.S().studyDays.includes(E.dow(num));
+/* Sans programme par jours (option par défaut), tous les jours se valent. */
+E.isStudyDay = num => !E.S().useDays || E.S().studyDays.includes(E.dow(num));
 E.streak = () => {
   const has = num => (E.state.days[E.keyOf(num)]?.xp || 0) > 0;
   const start = E.dayNum(E.state.created) - 1;
@@ -235,10 +236,11 @@ E.MENU = [
     ["prononciation", "👄", "Prononciation", "Sons, accent, paires de mots"]] },
   { label: "Mon parcours", items: [
     ["test", "🎓", "Test de niveau", "3 minutes pour savoir où tu en es"],
-    ["programme", "📅", "Programme jour par jour", "De 7 à 180 jours"],
+    ["programme", "📅", "Programme par jours", "Facultatif · de 7 à 180 jours"],
     ["stats", "📊", "Mes progrès", "Série, points, maîtrise"],
     ["favoris", "⭐", "Mes favoris", "Tes mots mis de côté"],
-    ["reglages", "⚙️", "Réglages", "Jours, couleurs, voix…"]] }
+    ["reglages", "⚙️", "Réglages", "Couleurs, voix, rythme…"],
+    ["enseignants", "🍎", "Pour les enseignants", "Contenus, méthode, confidentialité"]] }
 ];
 const menuItem = ([href, ico, title, sub]) => `<a class="menu-item" href="#${href}" data-href="${href}"><span class="mi-ico" aria-hidden="true">${ico}</span><span><b>${E.esc(title)}</b><small>${E.esc(sub)}</small></span></a>`;
 E.renderMenus = () => {

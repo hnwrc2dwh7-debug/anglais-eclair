@@ -37,8 +37,9 @@ E.todayTasks = () => {
   const tasks = [];
   tasks.push({ href: "revisions", ico: "🗂️", title: "Révisions", sub: due ? `${E.plural(due, "carte")} à revoir` : "Rien à revoir pour l’instant", done: due === 0 && (d.reviewed || 0) >= 0 && Object.keys(E.state.srs).length > 0, skip: !Object.keys(E.state.srs).length });
   tasks.push({ href: plan?.theme ? `apprendre-${plan.theme.id}` : "apprendre", ico: plan?.theme?.emoji || "✨", title: "Nouveaux mots", sub: `${Math.min(d.learned || 0, s.newWords)} / ${s.newWords} appris${plan?.theme ? ` · ${plan.theme.name}` : ""}`, done: (d.learned || 0) >= s.newWords });
-  if (plan?.lesson) tasks.push({ href: plan.lesson.href, ico: "📐", title: "Leçon du jour", sub: plan.lesson.name, done: E.state.lessons[plan.lesson.id]?.day === E.today() });
-  tasks.push({ href: `jeu-${plan?.game?.id || "image"}`, ico: plan?.game?.emoji || "🎮", title: "Jeu du jour", sub: plan?.game?.name || "Un petit quiz", done: (d.games || 0) > 0 });
+  const lesson = plan?.lesson || (E.nextLesson ? E.nextLesson() : null), game = plan?.game || (E.gameOfDay ? E.gameOfDay() : null);
+  if (lesson) tasks.push({ href: lesson.href, ico: "📐", title: "Leçon conseillée", sub: lesson.name, done: E.state.lessons[lesson.id]?.day === E.today() });
+  tasks.push({ href: `jeu-${game?.id || "image"}`, ico: game?.emoji || "🎮", title: "Jeu du jour", sub: game?.name || "Un petit quiz", done: (d.games || 0) > 0 });
   return tasks.filter(t => !t.skip);
 };
 E.route("accueil", () => {
@@ -65,7 +66,7 @@ E.route("accueil", () => {
     <div class="stack" style="gap:14px">
       <span class="eyebrow">${E.fmtDay(t, true)}${planInfo ? ` · jour ${planInfo.index + 1} / ${s.planLength} du programme` : ""}</span>
       <h1>${hello} On allume l’éclair ? ⚡</h1>
-      <p>${study ? (d.xp >= goal ? "Objectif du jour atteint. Bravo ! Tu peux continuer pour le plaisir." : `Encore <b>${goal - d.xp} points</b> pour atteindre ton objectif du jour. Ton rendez-vous : <b>${esc(s.reminder)}</b>.`) : "C’est un jour de repos dans ton programme. Une petite partie de jeu ne fait jamais de mal !"}</p>
+      <p>${study ? (d.xp >= goal ? "Objectif du jour atteint. Bravo ! Tu peux continuer pour le plaisir." : `Encore <b>${goal - d.xp} points</b> pour atteindre ton objectif du jour. ${s.useDays ? ` Ton rendez-vous : <b>${esc(s.reminder)}</b>.` : ""}`) : "C’est un jour de repos dans ton programme. Une petite partie de jeu ne fait jamais de mal !"}</p>
       <div class="row"><a class="btn spark big" href="#${firstTodo.href}">Commencer ma séance →</a><a class="btn ghost" href="#jeu-eclair">⚡ Défi 60 s</a></div>
     </div>
     <div class="ring-wrap">${ring(pct, d.xp, `sur ${goal} points`)}</div>
@@ -85,9 +86,9 @@ E.route("accueil", () => {
       <div class="todo">${tasks.map(x => `<a href="#${x.href}" class="${x.done ? "done" : ""}"><span class="t-ico">${x.done ? "✅" : x.ico}</span><span><b>${esc(x.title)}</b><small>${esc(x.sub)}</small></span><span aria-hidden="true">→</span></a>`).join("")}</div>
     </section>
     <section class="card">
-      <div class="card-title"><h2>Ta semaine</h2><a class="btn small ghost" href="#reglages-rythme">Mes jours ⚙️</a></div>
+      <div class="card-title"><h2>Ta semaine</h2><a class="btn small ghost" href="${s.useDays ? "#reglages-rythme" : "#programme"}">${s.useDays ? "Mes jours ⚙️" : "📅 Programme (facultatif)"}</a></div>
       <div class="week">${week}</div>
-      <p class="muted" style="margin-top:12px;font-size:.9rem">✅ objectif atteint · ⚡ un peu de pratique · 💤 jour de repos. ${s.restKeepsStreak ? "Les jours de repos ne cassent pas ta série." : "Chaque jour compte pour ta série."}</p>
+      <p class="muted" style="margin-top:12px;font-size:.9rem">${s.useDays ? `✅ objectif atteint · ⚡ un peu de pratique · 💤 jour de repos. ${s.restKeepsStreak ? "Les jours de repos ne cassent pas ta série." : "Chaque jour compte pour ta série."}` : "✅ objectif atteint · ⚡ un peu de pratique. Aucun jour imposé : tu apprends quand tu veux."}</p>
       ${planInfo ? `<div style="margin-top:14px" class="stack"><div class="row between"><b>Programme ${s.planLength} jours</b><span class="muted">${E.state.plan.done.length} jours faits</span></div><div class="bar spark"><i style="width:${Math.round(E.state.plan.done.length / s.planLength * 100)}%"></i></div><a class="btn small" href="#programme">Voir mon programme →</a></div>` : ""}
     </section>
   </div>

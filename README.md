@@ -5,13 +5,15 @@ Un site complet pour apprendre l’anglais vite, **gratuit, sans compte, sans IA
 - **1 531 mots en images** répartis dans **50 thèmes** (A1 → C1), avec exemples, écoute et favoris
 - **Les 12 temps** : tableau, frise du temps, construction, pièges, exemples à écouter, exercices corrigés
 - **27 leçons de grammaire** (conditionnels, modaux, passif, comparatifs, discours rapporté…)
-- **Conjugueur** pour n’importe quel verbe (190 irréguliers connus, phrasal verbs compris)
+- **189 verbes irréguliers**, avec la **fiche du cours en 6 catégories** (indispensables, « come », triplés, jumeaux, casse-pieds, I-A-U), écoute, mode test et quiz par catégorie
+- **Conjugueur** pour n’importe quel verbe (phrasal verbs compris)
 - **8 petites histoires** à écouter phrase par phrase (A1 → B2) avec questions de compréhension
 - **Test de niveau** en 3 minutes qui adapte le site
 - **Phrases utiles**, **phrasal verbs**, **expressions imagées**, **faux amis**, **anglais familier**, **prononciation**
 - **17 jeux** : image → mot, dictée, défi éclair 60 s, vrai/faux, memory, pendu, mot mélangé, quiz des temps…
 - **Cartes mémoire avec répétition espacée** (révisions du jour)
-- **Programme jour par jour** (7 à 180 jours) selon **tes jours d’étude**
+- **Programme jour par jour facultatif** (7 à 180 jours) selon **tes jours d’étude**, désactivé par défaut
+- **Page pour les enseignants** : contenus par niveau CECRL, méthode, confidentialité, idées d’utilisation en classe
 - **Réglages** : jours, objectif quotidien, 12 thèmes de couleur, mode sombre, polices, taille du texte, voix (UK, US, AU…), vitesse, etc.
 - Fonctionne **hors connexion** et s’installe comme une appli sur téléphone
 

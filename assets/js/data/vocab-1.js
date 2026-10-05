@@ -83,15 +83,15 @@ V("colors", "Couleurs", "🎨", "A1", "Bases", `
 🟨|yellow|jaune|A yellow taxi.|Un taxi jaune.
 🟧|orange|orange|An orange T-shirt.|Un tee-shirt orange.
 🟪|purple|violet|Purple is my favourite colour.|Le violet est ma couleur préférée.
-🩷|pink|rose|She has pink shoes.|Elle a des chaussures roses.
+🌸|pink|rose|She has pink shoes.|Elle a des chaussures roses.
 ⬛|black|noir|A black cat.|Un chat noir.
 ⬜|white|blanc|White snow.|De la neige blanche.
-🩶|grey / gray|gris|The sky is grey today.|Le ciel est gris aujourd’hui.
+🐘|grey / gray|gris|The sky is grey today.|Le ciel est gris aujourd’hui.
 🟫|brown|marron / brun|He has brown eyes.|Il a les yeux marron.
 🥇|gold|doré / or|A gold medal.|Une médaille d’or.
 🥈|silver|argenté / argent|A silver ring.|Une bague en argent.
 🌌|dark blue|bleu foncé|A dark blue jacket.|Une veste bleu foncé.
-🩵|light blue|bleu clair|Light blue walls.|Des murs bleu clair.
+🔹|light blue|bleu clair|Light blue walls.|Des murs bleu clair.
 🌊|turquoise|turquoise|Turquoise water.|Une eau turquoise.
 🍷|burgundy|bordeaux|A burgundy dress.|Une robe bordeaux.
 🍦|beige|beige|Beige trousers.|Un pantalon beige.
@@ -221,7 +221,7 @@ V("body", "Le corps", "🧍", "A1", "Les gens", `
 ☝️|finger|doigt|Point with your finger.|Montre du doigt.
 👍|thumb|pouce|Thumbs up!|Pouce levé !
 🦵|leg|jambe|He hurt his leg.|Il s’est blessé à la jambe.
-🦶|foot (feet)|pied(s)|My feet are tired.|J’ai mal aux pieds.
+🦶|foot (feet)|pied(s)|My feet are tired.|J’ai les pieds fatigués.
 🦴|knee|genou|I fell on my knee.|Je suis tombé sur le genou.
 🫀|heart|cœur|My heart is beating fast.|Mon cœur bat vite.
 🧠|brain|cerveau|Use your brain!|Utilise ton cerveau !

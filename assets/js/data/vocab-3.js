@@ -12,7 +12,7 @@ V("travel", "Voyage, aéroport & hôtel", "🧳", "A2", "Ville & voyage", `
 ✈️|flight|vol|My flight is delayed.|Mon vol est retardé.
 🛫|to take off|décoller|The plane takes off at noon.|L’avion décolle à midi.
 🛬|to land|atterrir|We landed in New York.|Nous avons atterri à New York.
-⏳|delayed|retardé|The train is delayed.|Le train est retardé.
+⏳|delayed|en retard / retardé|The train is delayed.|Le train est retardé.
 🚫|cancelled|annulé|The flight was cancelled.|Le vol a été annulé.
 📝|to check in|enregistrer / s’enregistrer|Check in two hours before.|Enregistrez-vous deux heures avant.
 🏨|reservation / booking|réservation|I have a booking for two nights.|J’ai une réservation pour deux nuits.
@@ -22,7 +22,7 @@ V("travel", "Voyage, aéroport & hôtel", "🧳", "A2", "Ville & voyage", `
 🗝️|room key|clé de chambre|I lost my room key.|J’ai perdu ma clé de chambre.
 🚪|to check out|libérer la chambre|Check-out is at 11.|Il faut libérer la chambre à 11 h.
 🗺️|tourist|touriste|Lots of tourists in summer.|Beaucoup de touristes en été.
-📸|sightseeing|tourisme / visite|Let's go sightseeing.|Allons visiter.
+📸|sightseeing|visites touristiques|Let's go sightseeing.|Allons visiter.
 🎒|trip|voyage / excursion|A school trip.|Une sortie scolaire.
 🌍|journey|trajet / voyage|A long journey.|Un long trajet.
 🌴|abroad|à l’étranger|I want to live abroad.|Je veux vivre à l’étranger.
@@ -48,7 +48,7 @@ V("sports", "Sports", "⚽", "A1", "Loisirs", `
 🏃|running|course à pied|Running in the park.|Courir au parc.
 🚴|cycling|cyclisme|The Tour de France is a cycling race.|Le Tour de France est une course cycliste.
 ⛷️|skiing|ski|Skiing in the Alps.|Du ski dans les Alpes.
-🏂|snowboarding|snowboard|I'm learning snowboarding.|J’apprends le snowboard.
+🏂|snowboarding|snowboard|I'm learning to snowboard.|J’apprends le snowboard.
 🏄|surfing|surf|Surfing in Biarritz.|Du surf à Biarritz.
 🥊|boxing|boxe|Boxing is a tough sport.|La boxe est un sport dur.
 🥋|judo / karate|judo / karaté|She does karate.|Elle fait du karaté.
@@ -252,7 +252,7 @@ V("verbs", "Verbes d’action essentiels", "🏃", "A1", "Mots essentiels", `
 🏃|to come|venir|Come here!|Viens ici !
 👀|to see|voir|I can see the sea.|Je vois la mer.
 👁️|to look (at)|regarder|Look at this!|Regarde ça !
-📺|to watch|regarder (attentivement)|We watch a film.|On regarde un film.
+📺|to watch|regarder (un film, un match…)|We watch a film.|On regarde un film.
 👂|to hear|entendre|Can you hear me?|Tu m’entends ?
 🎧|to listen (to)|écouter|Listen to me.|Écoute-moi.
 🗣️|to speak|parler (une langue)|Do you speak English?|Tu parles anglais ?

@@ -96,3 +96,57 @@ E.route("test", () => {
   <div class="play" id="testBox"></div>`;
 }, "Test de niveau");
 })();
+
+/* ---------- Page pour les enseignants ---------- */
+(() => {
+"use strict";
+const E = window.Eclair, { esc } = E;
+E.route("enseignants", () => {
+  const byLevel = E.LEVELS.map(l => [l, E.THEMES.filter(t => t.level === l).length, E.WORDS.filter(w => w.level === l).length]);
+  const nLessons = window.TENSES.length + window.LESSONS.length;
+  const nEx = [...window.TENSES, ...window.LESSONS].reduce((a, t) => a + t.ex.length, 0);
+  const nPhr = window.PHRASES.reduce((a, g) => a + g.items.length, 0);
+  return `${E.head("Présentation", "Pour les enseignants 🍎", "Anglais Éclair est un site gratuit, sans publicité, sans compte et sans intelligence artificielle. Il complète le cours : vocabulaire illustré, grammaire, verbes irréguliers et entraînement par le jeu.")}
+  <div class="stat-row">
+    <div class="stat"><span class="s-ico">🖼️</span><b>${E.WORDS.length.toLocaleString("fr-FR")}</b><span>mots illustrés, ${E.THEMES.length} thèmes</span></div>
+    <div class="stat"><span class="s-ico">📐</span><b>${nLessons}</b><span>leçons de grammaire · ${nEx} exercices corrigés</span></div>
+    <div class="stat"><span class="s-ico">🔁</span><b>${window.IRREGULARS.length}</b><span>verbes irréguliers, dont la fiche de ${window.COURSE_GROUPS.reduce((a, c) => a + c.verbs.length, 0)}</span></div>
+    <div class="stat"><span class="s-ico">🎮</span><b>${E.GAMES.length}</b><span>jeux et quiz, ${window.STORIES.length} histoires</span></div>
+  </div>
+  <div class="grid g2">
+    <section class="card stack"><h2>📚 Contenus par niveau (CECRL)</h2>
+      <div class="table-wrap"><table class="data" style="min-width:0"><thead><tr><th>Niveau</th><th>Thèmes</th><th>Mots</th></tr></thead><tbody>
+      ${byLevel.map(([l, t, w]) => `<tr><td><b>${l}</b> · ${E.LEVEL_NAMES[l]}</td><td>${t}</td><td>${w}</td></tr>`).join("")}</tbody></table></div>
+      <p class="muted" style="font-size:.88rem">S’y ajoutent ${nPhr} phrases utiles en situation, ${window.PHRASALS.length} phrasal verbs, ${window.IDIOMS.length} expressions imagées, ${window.FALSE_FRIENDS.length} faux amis et ${window.SOUNDS.length} fiches de prononciation.</p></section>
+    <section class="card stack"><h2>🧠 La méthode</h2>
+      <ul class="list-clean">
+        <li><b>Mémorisation espacée</b> : les cartes mémoire reviennent après 1, 2, 4, 8, 16, 32 puis 64 jours, selon la réponse de l’élève.</li>
+        <li><b>Écoute systématique</b> : chaque mot, exemple et verbe peut être écouté (accent britannique ou américain, vitesse réglable).</li>
+        <li><b>Grammaire explicite</b> : formule, emplois, piège classique pour un francophone, astuce de mémorisation, exemples traduits.</li>
+        <li><b>Entraînement varié</b> : QCM, saisie, dictée, défi chronométré, memory, pendu, quiz de temps et de verbes avec erreurs typiques (ex. <i>buyed</i>).</li>
+        <li><b>Autonomie</b> : test de niveau, objectif quotidien indicatif, programme par jours facultatif.</li>
+      </ul></section>
+  </div>
+  <div class="grid g2">
+    <section class="card stack"><h2>🔁 Les verbes irréguliers</h2>
+      <p>La page Verbes reprend le classement de la fiche de cours en six catégories : ${window.COURSE_GROUPS.map(c => `<b>${esc(c.name)}</b>`).join(", ")}. Chaque catégorie s’écoute et se travaille en quiz séparément.</p>
+      <a class="btn primary" href="#verbes" style="justify-self:start">Voir la fiche des verbes →</a></section>
+    <section class="card stack"><h2>📝 Choix pédagogiques</h2>
+      <ul class="list-clean">
+        <li>Les « 12 temps » sont une présentation pédagogique (3 repères × 4 aspects). En grammaire anglaise, seuls le présent et le prétérit sont des temps au sens strict ; le futur s’exprime par <i>will</i>, <i>going to</i> ou le présent.</li>
+        <li>L’anglais britannique sert de référence (<i>colour</i>, <i>learnt</i>) ; les variantes américaines sont signalées (<i>color</i>, <i>learned</i>, <i>fall</i>, <i>check</i>…).</li>
+        <li>Les traductions donnent le sens le plus courant ; certains mots en ont plusieurs selon le contexte.</li>
+      </ul></section>
+  </div>
+  <section class="card stack"><h2>🔒 Données & confidentialité</h2>
+    <p>Aucune inscription, aucune adresse e-mail, aucun cookie publicitaire, aucun outil de mesure d’audience. Les progrès de chaque élève restent uniquement dans le navigateur de son appareil. La voix utilisée est celle de l’appareil (synthèse vocale du système). Le site fonctionne aussi hors connexion.</p></section>
+  <section class="card stack"><h2>🧑‍🏫 Idées d’utilisation en classe</h2>
+    <ul class="list-clean">
+      <li>Projeter un thème illustré et faire répéter les mots avec le bouton 🔊.</li>
+      <li>Lancer le <b>Défi éclair</b> (60 s) en début de cours comme rituel.</li>
+      <li>Donner en devoir une catégorie de la fiche de verbes, puis le quiz correspondant.</li>
+      <li>Utiliser une petite histoire comme compréhension orale : écoute sans le texte, puis questions.</li>
+    </ul>
+    <div class="row"><a class="btn" href="#vocabulaire">🧠 Vocabulaire</a><a class="btn" href="#temps">⏳ Les 12 temps</a><a class="btn" href="#histoires">📖 Histoires</a><a class="btn" href="#jeux">🎮 Jeux</a></div></section>`;
+}, "Pour les enseignants");
+})();

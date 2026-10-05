@@ -154,6 +154,7 @@ function hubTemps() {
     <div class="callout accent"><b>🎥 Continu (be + -ing)</b><span>L’action vue en plein déroulement, comme dans une vidéo.</span></div>
     <div class="callout accent"><b>🌉 Parfait (have + participe)</b><span>Un lien avec un moment de référence : avant, jusqu’à, déjà.</span></div>
   </div>
+  <p class="muted" style="font-size:.88rem">📝 Note : les « 12 temps » sont une présentation pédagogique. En grammaire anglaise, seuls le présent et le prétérit sont des temps au sens strict ; le futur se construit avec <i>will</i>, <i>going to</i> ou le présent, et les aspects (continu, parfait) s’y ajoutent.</p>
   <section class="stack"><h2>Et aussi pour le futur et les hypothèses</h2><div class="grid auto-fill">
     ${["going-to", "present-future", "first-conditional", "second-conditional", "third-conditional", "wish", "used-to"].map(id => { const l = E.LESSON.get(id); return `<a class="lesson-link" href="#lecon-${id}"><span class="tag lvl" style="justify-self:start">${l.level}</span><b>${esc(l.name)}</b><small class="muted">${esc(l.lead)}</small></a>`; }).join("")}
   </div></section>`;
@@ -253,7 +254,8 @@ E.route("verbes", () => {
     const draw = () => {
       const q = E.norm($("#vbq").value), g = $("#vbg").value, show = $("#vbs").value, hide = $("#vbh").value;
       ui.vbg = g; ui.vbs = show; ui.vbh = hide; E.save();
-      const list = window.IRREGULARS.filter(v => (g === "all" || v[4] === g) && (!q || [v[0], v[1], v[2], v[3]].some(x => E.norm(x).includes(q))) &&
+      const course = g.startsWith("course:") ? new Set(window.COURSE_GROUPS.find(c => c.id === g.slice(7))?.verbs || []) : null;
+      const list = window.IRREGULARS.filter(v => (g === "all" || (course ? course.has(v[0]) : v[4] === g)) && (!q || [v[0], v[1], v[2], v[3]].some(x => E.norm(x).includes(q))) &&
         (show === "all" || (show === "known") === known.has(v[0])));
       const mask = (txt, col) => (hide === col || hide === "both") && col !== "none" ? `<button class="chip" type="button" data-reveal="${esc(txt)}">👁 voir</button>` : esc(txt);
       $("#vbrows").innerHTML = list.map(v => `<tr class="${known.has(v[0]) ? "known" : ""}"><td class="en">${esc(v[0])}</td><td>${mask(v[1], "past")}</td><td>${mask(v[2], "part")}</td><td>${hide === "fr" ? `<button class="chip" type="button" data-reveal="${esc(v[3])}">👁 voir</button>` : esc(v[3])}</td>
@@ -262,6 +264,13 @@ E.route("verbes", () => {
       $("#vbcount").textContent = `${list.length} verbes affichés · ${known.size} / ${window.IRREGULARS.length} marqués comme sus`;
     };
     ["#vbq", "#vbg", "#vbs", "#vbh"].forEach(s => $(s).addEventListener("input", draw));
+    $("#app > .view").addEventListener("click", e => {
+      const cs = e.target.closest("[data-course-say]"), cq = e.target.closest("[data-course-quiz]"), cd = e.target.closest("[data-course-show]");
+      const grp = id => window.COURSE_GROUPS.find(c => c.id === id);
+      if (cs) { const c = grp(cs.dataset.courseSay); E.sayQueue(c.verbs.map(b => { const v = window.IRREGULARS.find(x => x[0] === b); return `${v[0]}, ${first(v[1])}, ${first(v[2])}`; })); }
+      if (cq) { E.state.ui.vSource = "course:" + cq.dataset.courseQuiz; E.save(); E.go("jeu-verbes"); }
+      if (cd) { $("#vbg").value = "course:" + cd.dataset.courseShow; draw(); $("#allVerbs").scrollIntoView({ behavior: "smooth" }); }
+    });
     $("#vbrows").addEventListener("click", e => {
       const r = e.target.closest("[data-reveal]"); if (r) { r.outerHTML = esc(r.dataset.reveal); return; }
       const k = e.target.closest("[data-know]");
@@ -271,15 +280,28 @@ E.route("verbes", () => {
   });
   return `${E.head("Formes · sens · écoute", "Verbes irréguliers 🔁", `${window.IRREGULARS.length} verbes, classés par familles pour les retenir plus vite. Cache une colonne pour te tester, clique sur 🔊 pour entendre les trois formes.`,
     `<div class="row"><a class="btn primary" href="#jeu-verbes">🎯 Quiz verbes</a><a class="btn" href="#conjugueur">🧩 Conjugueur</a></div>`)}
+  <section class="stack">
+    <div class="row between"><h2>📌 La fiche du cours : 6 catégories</h2><span class="row"><button class="btn small ghost no-print" type="button" onclick="window.print()">🖨️ Imprimer</button><span class="muted">${window.COURSE_GROUPS.reduce((a, c) => a + c.verbs.length, 0)} verbes essentiels</span></span></div>
+    <div class="grid auto-fill course-grid">${window.COURSE_GROUPS.map(c => {
+      const rows = c.verbs.map(b => window.IRREGULARS.find(v => v[0] === b)).filter(Boolean);
+      return `<article class="card course-card"><div class="row between"><h3>${c.emoji} ${esc(c.name)}</h3><span class="tag accent">${rows.length}</span></div>
+        <p class="muted" style="font-size:.86rem">${esc(c.desc)}</p>
+        <table class="mini"><thead><tr><th>Base</th><th>Prétérit</th><th>Participe</th></tr></thead><tbody>${rows.map(v => `<tr><td><b>${esc(v[0])}</b></td><td>${esc(v[1])}</td><td>${esc(v[2])}</td></tr>`).join("")}</tbody></table>
+        <div class="row"><button class="btn small" type="button" data-course-say="${c.id}">🔊 Écouter</button><button class="btn small primary" type="button" data-course-quiz="${c.id}">🎯 Quiz</button><button class="btn small ghost" type="button" data-course-show="${c.id}">☰ Détail</button></div></article>`;
+    }).join("")}</div>
+  </section>
+  <h2 id="allVerbs">Tous les verbes</h2>
   <div class="card toolbar">
     <label class="field grow" for="vbq">Chercher<input id="vbq" type="search" placeholder="ex. go, went, dormir…" autocomplete="off"></label>
-    ${E.select("vbg", [["all", "Toutes les familles"], ...Object.entries(window.VERB_GROUPS)], ui.vbg || "all", "Famille")}
+    ${E.select("vbg", [["all", "Tous les verbes"], ...window.COURSE_GROUPS.map(c => ["course:" + c.id, `📌 Fiche : ${c.name}`]), ...Object.entries(window.VERB_GROUPS)], ui.vbg || "all", "Catégorie")}
     ${E.select("vbs", [["all", "Tous"], ["todo", "À apprendre"], ["known", "Déjà sus"]], ui.vbs || "all", "Afficher")}
     ${E.select("vbh", [["none", "Tout montrer"], ["past", "Cacher le prétérit"], ["part", "Cacher le participe"], ["both", "Cacher les deux"], ["fr", "Cacher le sens"]], ui.vbh || "none", "Mode test")}
   </div>
   <div class="table-wrap"><table class="data"><thead><tr><th>Base</th><th>Prétérit</th><th>Participe passé</th><th>Sens</th><th>🔊</th><th>Su ?</th></tr></thead><tbody id="vbrows"></tbody></table></div>
   <p class="muted" id="vbcount"></p>
   <div class="grid g3">
+    <div class="callout"><b>🗣️ Astuce de prononciation</b><span>read – read – read s’écrit pareil, mais se prononce /riːd/ – /red/ – /red/.</span></div>
+    <div class="callout"><b>🇬🇧 / 🇺🇸 Deux formes ?</b><span>learnt, dreamt, smelt sont britanniques ; learned, dreamed, smelled sont américains. Les deux sont justes.</span></div>
     <div class="callout"><b>🎵 i – a – u</b><span>sing – sang – sung · drink – drank – drunk · swim – swam – swum</span></div>
     <div class="callout"><b>🛍️ -ought / -aught</b><span>buy – bought · think – thought · teach – taught · catch – caught</span></div>
     <div class="callout"><b>✂️ Trois fois pareil</b><span>cut – cut – cut · put – put – put · let – let – let</span></div>

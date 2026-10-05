@@ -90,7 +90,7 @@ V("celebrations", "Fêtes & célébrations", "🎉", "A2", "Monde", `
 🥳|guest|invité|The guests are arriving.|Les invités arrivent.
 🎇|fireworks|feu d’artifice|Fireworks on the 14th of July.|Le feu d’artifice du 14 juillet.
 💃|to dance|danser|Let's dance!|Dansons !
-🥂|toast|toast (porter un)|Let's raise a toast.|Portons un toast.
+🥂|toast|toast (porter un toast)|Let's raise a toast.|Portons un toast.
 🎀|to wrap|emballer|Wrap the present.|Emballe le cadeau.
 🎶|Happy Birthday to you|Joyeux anniversaire (chanson)|Sing Happy Birthday!|Chante joyeux anniversaire !
 🎌|bank holiday|jour férié|Monday is a bank holiday.|Lundi est un jour férié.
@@ -99,9 +99,9 @@ V("celebrations", "Fêtes & célébrations", "🎉", "A2", "Monde", `
 
 V("space", "Sciences & espace", "🚀", "B1", "Monde", `
 🚀|rocket|fusée|The rocket was launched.|La fusée a été lancée.
-🪐|planet|planète|Mars is a red planet.|Mars est une planète rouge.
+🪐|planet|planète|Mars is the Red Planet.|Mars est la planète rouge.
 ☀️|the Sun|le Soleil|The Earth goes around the Sun.|La Terre tourne autour du Soleil.
-🌕|the Moon|la Lune|Men walked on the Moon.|Des hommes ont marché sur la Lune.
+🌕|the Moon|la Lune|Astronauts walked on the Moon.|Des astronautes ont marché sur la Lune.
 🌌|galaxy|galaxie|Our galaxy is the Milky Way.|Notre galaxie est la Voie lactée.
 🌠|universe|univers|The universe is huge.|L’univers est immense.
 ☄️|comet|comète|A comet in the sky.|Une comète dans le ciel.
@@ -256,7 +256,7 @@ V("cooking", "Cuisiner : verbes & goûts", "👩‍🍳", "B1", "Manger & boire"
 🍽️|bland|fade|The sauce is bland.|La sauce est fade.
 🥩|raw|cru|Raw fish.|Du poisson cru.
 🔥|well done|bien cuit|A well-done steak.|Un steak bien cuit.
-🩸|rare|saignant|Rare steak, please.|Un steak saignant, s’il vous plaît.
+🩸|rare|saignant (viande)|Rare steak, please.|Un steak saignant, s’il vous plaît.
 🍳|to grill|griller|Grill the fish.|Fais griller le poisson.
 🍗|to roast|rôtir|Roast the chicken.|Fais rôtir le poulet.
 🫕|to melt|faire fondre|Melt the butter.|Fais fondre le beurre.
@@ -316,7 +316,7 @@ V("beach", "Mer, plage & vacances", "🏖️", "A2", "Ville & voyage", `
 ⛱️|beach umbrella|parasol|Under the beach umbrella.|Sous le parasol.
 🏰|sandcastle|château de sable|Build a sandcastle.|Construis un château de sable.
 🩴|towel|serviette de plage|Lie on your towel.|Allonge-toi sur ta serviette.
-🦀|rock pool|flaque de rocher|Crabs in the rock pool.|Des crabes dans la flaque.
+🦀|rock pool|mare entre les rochers|Crabs in the rock pool.|Des crabes dans la mare.
 🚤|speedboat|hors-bord|A ride on a speedboat.|Un tour en hors-bord.
 🏄|surfboard|planche de surf|A new surfboard.|Une nouvelle planche de surf.
 🌅|coast|côte|The Atlantic coast.|La côte atlantique.
@@ -384,7 +384,7 @@ V("society", "Société, loi & politique", "⚖️", "B2", "Monde", `
 😇|innocent|innocent|He's innocent.|Il est innocent.
 🗳️|to vote|voter|Don't forget to vote.|N’oubliez pas de voter.
 🏛️|parliament|parlement|The British Parliament.|Le Parlement britannique.
-👑|the Queen / the King|la reine / le roi|The King of England.|Le roi d’Angleterre.
+👑|the Queen / the King|la reine / le roi|The King of the United Kingdom.|Le roi du Royaume-Uni.
 🗽|freedom|liberté|Freedom of speech.|La liberté d’expression.
 ✊|rights|droits|Human rights.|Les droits de l’homme.
 ✊|protest|manifestation|A protest against the reform.|Une manifestation contre la réforme.

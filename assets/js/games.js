@@ -72,11 +72,16 @@ const wordQ = {
 const verbQ = v => {
   const part = Math.random() < 0.5;
   const ans = (part ? v[2] : v[1]).split("/").map(x => x.trim());
+  const other = (part ? v[1] : v[2]).split("/")[0].trim();
+  const say = `${v[0]}, ${v[1].split("/")[0]}, ${v[2].split("/")[0]}`;
   if (Math.random() < 0.5) {
-    const others = E.shuffle(window.IRREGULARS.filter(x => x[0] !== v[0])).slice(0, 3).map(x => (part ? x[2] : x[1]).split("/")[0].trim());
-    return { img: "🔁", prompt: `to ${v[0]}`, sub: `${part ? "Participe passé" : "Prétérit"} de « ${v[3]} » ?`, options: E.shuffle([ans[0], ...others.filter(o => !ans.includes(o))]).slice(0, 4), answers: ans, explain: `${v[0]} – ${v[1]} – ${v[2]}`, sayAfter: `${v[0]}, ${v[1].split("/")[0]}, ${v[2].split("/")[0]}` };
+    /* Pièges réalistes : forme régulière inventée, l'autre forme du verbe, la base, puis d'autres verbes. */
+    const traps = [E.regPast ? E.regPast(v[0]) : v[0] + "ed", other, v[0], ...E.shuffle(window.IRREGULARS.filter(x => x[0] !== v[0])).slice(0, 4).map(x => (part ? x[2] : x[1]).split("/")[0].trim())];
+    const opts = [ans[0]];
+    for (const t of traps) { if (opts.length >= 4) break; if (!ans.includes(t) && !opts.includes(t)) opts.push(t); }
+    return { img: "🔁", prompt: `to ${v[0]}`, sub: `${part ? "Participe passé" : "Prétérit"} de « ${v[3]} » ?`, options: E.shuffle(opts), answers: ans, explain: `${v[0]} – ${v[1]} – ${v[2]}`, sayAfter: say };
   }
-  return { img: "🔁", prompt: `to ${v[0]}`, sub: `Écris le ${part ? "participe passé" : "prétérit"} (${v[3]})`, input: true, answers: ans, explain: `${v[0]} – ${v[1]} – ${v[2]}`, sayAfter: `${v[0]}, ${v[1].split("/")[0]}, ${v[2].split("/")[0]}` };
+  return { img: "🔁", prompt: `to ${v[0]}`, sub: `Écris le ${part ? "participe passé" : "prétérit"} (${v[3]})`, input: true, answers: ans, explain: `${v[0]} – ${v[1]} – ${v[2]}`, sayAfter: say };
 };
 const listQ = (list, enKey = "en", frKey = "fr", emoji = () => "") => {
   const it = E.pick(list), reverse = Math.random() < 0.35;
@@ -111,7 +116,14 @@ const makeGen = id => {
       return wordQ[k](w);
     };
   }
-  if (id === "verbes") { const lv = E.S().quizLevel === "all" ? window.IRREGULARS : window.IRREGULARS.filter(v => v[4] !== "rare"); return () => verbQ(E.pick(lv)); }
+  if (id === "verbes") {
+    const src = E.state.ui.vSource || (E.S().quizLevel === "all" ? "all" : "common");
+    const course = src.startsWith("course:") ? new Set(window.COURSE_GROUPS.find(c => c.id === src.slice(7))?.verbs || []) : null;
+    const sheet = new Set(window.COURSE_GROUPS.flatMap(c => c.verbs));
+    const lv = window.IRREGULARS.filter(v => course ? course.has(v[0]) : src === "sheet" ? sheet.has(v[0]) : src === "all" || v[4] !== "rare");
+    let bag = [];
+    return () => { if (!bag.length) bag = E.shuffle(lv); return verbQ(bag.pop()); };
+  }
   if (id === "temps") return tenseQ;
   if (id === "phrasal") return () => listQ(window.PHRASALS, "en", "fr", () => "🧲");
   if (id === "idiomes") return () => listQ(window.IDIOMS, "en", "fr", x => x.note);
@@ -375,9 +387,12 @@ E.route("jeu", id => {
   const src = E.SOURCES().find(x => x[0] === (E.state.ui.gSource || "level"));
   const body = id === "memory" ? runMemory() : id === "pendu" ? runHangman() : id === "lettres" ? runScramble() : runQuiz(id);
   E.after(() => $("#gsrc2")?.addEventListener("input", e => { E.state.ui.gSource = e.target.value; E.save(); E.rerender(); }));
+  E.after(() => $("#vsrc")?.addEventListener("input", e => { E.state.ui.vSource = e.target.value; E.save(); E.rerender(); }));
+  const vOpts = [["common", "Tous les verbes courants"], ["sheet", "📌 Les 62 verbes de la fiche"], ...window.COURSE_GROUPS.map(c => ["course:" + c.id, `📌 ${c.name}`]), ["all", "Tous, même les plus rares"]];
   return `<div class="crumbs"><a href="#jeux">Jeux</a> › ${esc(g.name)}</div>
   <div class="head"><div><h1>${g.emoji} ${esc(g.name)}</h1><p>${esc(g.desc)}${g.timed ? ` Chrono : ${E.S().flashTime} s.` : ""}</p></div>
-  ${g.words ? `<div style="min-width:240px">${E.select("gsrc2", E.SOURCES(), src ? src[0] : "level", "Mots utilisés")}</div>` : ""}</div>
+  ${g.words ? `<div style="min-width:240px">${E.select("gsrc2", E.SOURCES(), src ? src[0] : "level", "Mots utilisés")}</div>` : ""}
+  ${id === "verbes" ? `<div style="min-width:240px">${E.select("vsrc", vOpts, E.state.ui.vSource || (E.S().quizLevel === "all" ? "all" : "common"), "Verbes utilisés")}</div>` : ""}</div>
   ${body}`;
 }, id => E.GAME.get(id)?.name || "Jeu");
 })();

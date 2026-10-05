@@ -123,12 +123,14 @@ const exercises = (list, key) => {
         $$(".exo-row", box).forEach(r => { const ok = check(r); if (ok !== null) { done++; if (ok) good++; } });
         if (done) { E.addXp(good * 8, "correct"); E.sfx(good === done ? "win" : "tick"); E.toast(`${good} / ${done} bonnes réponses`); }
       }
+      const hb = e.target.closest("[data-exhint]");
+      if (hb) { const row = hb.closest(".exo-row"), i = Number(row.dataset.i); $(".fb", row).innerHTML = `💡 <span class="muted">${esc(list[i][2] || "Relis la règle juste au-dessus.")}</span>`; return; }
       if (e.target.closest("[data-show]")) $$(".exo-row", box).forEach(r => { const i = Number(r.dataset.i); $(".fb", r).innerHTML = `💡 <b>${esc(list[i][1].split("/")[0] || "(rien)")}</b> <span class="muted">· ${esc(list[i][2] || "")}</span>`; });
     });
     box.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("input")) { e.preventDefault(); $("[data-check]", e.target.closest(".exo-row")).click(); } });
   });
   return `<section class="card" id="exo-${key}"><div class="card-title"><h2>✍️ À toi de jouer</h2><span class="muted">${list.length} phrases · Entrée pour valider</span></div>
-  <div class="exo">${list.map(([q], i) => `<div class="exo-row" data-i="${i}"><span>${esc(q).replace("___", "<b>_____</b>")}</span><input type="text" aria-label="Réponse ${i + 1}" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn small" type="button" data-check>Vérifier</button><div class="fb"></div></div>`).join("")}</div>
+  <div class="exo">${list.map(([q], i) => `<div class="exo-row" data-i="${i}"><span>${esc(q).replace("___", "<b>_____</b>")}</span><input type="text" aria-label="Réponse ${i + 1}" autocomplete="off" autocapitalize="off" spellcheck="false"><span class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn small ghost" type="button" data-exhint title="Indice" aria-label="Indice">💡</button><button class="btn small" type="button" data-check>Vérifier</button></span><div class="fb"></div></div>`).join("")}</div>
   <div class="row" style="margin-top:12px"><button class="btn primary" type="button" data-all>Tout corriger</button><button class="btn ghost" type="button" data-show>Voir les réponses</button></div></section>`;
 };
 const markLesson = id => {
@@ -236,7 +238,7 @@ E.route("conjugueur", () => {
     $("#cquick").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if (b) { $("#cv").value = b.dataset.v; draw(); } });
     draw();
   });
-  return `${E.head("Conjugueur", "Un verbe, tous les temps 🧩", "Tape n’importe quel verbe anglais : réguliers, irréguliers (190 connus) et même les phrasal verbs comme give up.")}
+  return `${E.head("Conjugueur", "Un verbe, tous les temps 🧩", "Tape n’importe quel verbe anglais : réguliers, irréguliers (${window.IRREGULARS.length} connus) et même les phrasal verbs comme give up.")}
   <div class="card stack">
     <div class="toolbar"><label class="field grow" for="cv">Verbe<input id="cv" type="text" value="${esc(ui.cv || "go")}" placeholder="ex. work, eat, give up" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
     ${E.select("ct", [["all", "Tous les temps"], ...E.CONJ_TENSES], ui.ct || "present-simple", "Temps")}</div>

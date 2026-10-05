@@ -2,10 +2,10 @@
 
 Un site complet pour apprendre l’anglais vite, **gratuit, sans compte, sans IA** (aucun quota consommé) :
 
-- **1 531 mots en images** répartis dans **50 thèmes** (A1 → C1), avec exemples, écoute et favoris
+- **1 773 mots en images** répartis dans **58 thèmes** (A1 → C1), avec exemples, écoute et favoris — dont des verbes du quotidien, des verbes avancés, des mots difficiles à prononcer et du vocabulaire académique
 - **Les 12 temps** : tableau, frise du temps, construction, pièges, exemples à écouter, exercices corrigés
 - **27 leçons de grammaire** (conditionnels, modaux, passif, comparatifs, discours rapporté…)
-- **189 verbes irréguliers**, avec la **fiche du cours en 6 catégories** (indispensables, « come », triplés, jumeaux, casse-pieds, I-A-U), écoute, mode test et quiz par catégorie
+- **238 verbes irréguliers** (dont 49 verbes composés), avec la **fiche du cours en 6 catégories** (indispensables, « come », triplés, jumeaux, casse-pieds, I-A-U), écoute, mode test et quiz par catégorie
 - **Conjugueur** pour n’importe quel verbe (phrasal verbs compris)
 - **8 petites histoires** à écouter phrase par phrase (A1 → B2) avec questions de compréhension
 - **Test de niveau** en 3 minutes qui adapte le site
@@ -14,16 +14,18 @@ Un site complet pour apprendre l’anglais vite, **gratuit, sans compte, sans IA
 - **Cartes mémoire avec répétition espacée** (révisions du jour)
 - **Programme jour par jour facultatif** (7 à 180 jours) selon **tes jours d’étude**, désactivé par défaut
 - **Page pour les enseignants** : contenus par niveau CECRL, méthode, confidentialité, idées d’utilisation en classe
-- **Réglages** : jours, objectif quotidien, 12 thèmes de couleur, mode sombre, polices, taille du texte, voix (UK, US, AU…), vitesse, etc.
+- **Réglages** : 12 couleurs principales, 15 couleurs de fond (clairs et sombres) + couleur personnalisée, motifs (points, carreaux, lignes, cahier), mode sombre, polices, taille du texte, voix (UK, US, AU…), vitesse, etc.
+- **Aides partout** : encadré « Comment ça marche ? » sur chaque page, page Aide (FAQ, lexique, raccourcis), message de bienvenue, indices dans les exercices
+- **Partage** : page avec QR code et lien — le site est public et peut être donné à tout moment
 - Fonctionne **hors connexion** et s’installe comme une appli sur téléphone
 
 ## Mettre le site en ligne (GitHub Pages)
 
 1. Sur GitHub : **Settings → Pages**
 2. *Source* : **Deploy from a branch**
-3. Branche : `claude/english-learning-site-2g74yo` (ou `main` après fusion), dossier **/ (root)** → **Save**
+3. Branche : `main`, dossier **/ (root)** → **Save**
 4. Après une minute, le site est en ligne à l’adresse :
-   **https://hnwrc2dwh7-debug.github.io/anglais-sans-delai/**
+   **https://hnwrc2dwh7-debug.github.io/anglais-eclair/**
 
 ## Tester en local
 

@@ -55,6 +55,27 @@ const distractors = (w, key, n, extraFilter = () => true) => {
   }
   return out;
 };
+/* Réponses acceptées pour un mot à écrire : avec ou sans « to », « a / the », sans la partie entre parenthèses. */
+E.answerVariants = en => {
+  const out = new Set();
+  for (const part of String(en).split(" / ")) {
+    const base = part.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim();
+    [part.trim(), base].forEach(x => {
+      out.add(x);
+      out.add(x.replace(/^to\s+/i, ""));
+      out.add(x.replace(/^(a|an|the)\s+/i, ""));
+    });
+    const inside = part.match(/\((.*?)\)/);
+    if (inside) {
+      const head = base.replace(/^(to|a|an|the)\s+/i, ""), alt = inside[1].trim();
+      /* « child (children) » : forme alternative du même mot. « sit (down) » : complément facultatif. */
+      const isAltForm = head.split(" ").length === 1 && /^[a-z]+$/i.test(alt) && alt[0].toLowerCase() === head[0].toLowerCase() && !["to", "the", "up", "down", "on", "off", "in", "at", "for", "out", "of"].includes(alt.toLowerCase());
+      if (isAltForm) out.add(alt);
+      else { const kept = part.replace(/[()]/g, "").replace(/\s+/g, " ").trim(); [kept, kept.replace(/^to\s+/i, ""), kept.replace(/^(a|an|the)\s+/i, "")].forEach(x => out.add(x)); }
+    }
+  }
+  return [...out].filter(Boolean).map(x => x.replace(/\//g, " "));
+};
 const simpleWord = w => /^[a-z]{3,10}$/i.test(w.en);
 const firstFr = fr => fr.split(" / ")[0];
 const nQ = () => Number(E.S().quizLen) || 10;
@@ -65,8 +86,8 @@ const wordQ = {
   fren: w => ({ word: w, img: E.img(w), prompt: w.fr, sub: "En anglais, ça se dit…", options: E.shuffle([w, ...distractors(w, "en", 3)]).map(x => x.en), answers: [w.en], after: w.en }),
   enfr: w => ({ word: w, img: "", prompt: w.en, say: w.en, sub: "Ça veut dire…", options: E.shuffle([w, ...distractors(w, "fr", 3)]).map(x => x.fr), answers: [w.fr] }),
   ecoute: w => ({ word: w, img: "", prompt: "🔊", say: w.en, sub: "Écoute, puis choisis.", replay: true, options: E.shuffle([w, ...distractors(w, "fr", 3, c => c.img !== w.img)]).map(x => `${E.img(x)} ${x.fr}`), answers: [`${E.img(w)} ${w.fr}`], after: w.en }),
-  ecrire: w => ({ word: w, img: E.img(w), prompt: w.fr, sub: "Écris le mot anglais.", input: true, answers: w.en.split(" / "), after: w.en }),
-  dictee: w => ({ word: w, img: "", prompt: "🎧", say: w.en, sub: "Écoute et écris ce que tu entends.", replay: true, hint: `${E.img(w)} ${w.fr}`, input: true, answers: w.en.split(" / ") }),
+  ecrire: w => ({ word: w, img: E.img(w), prompt: w.fr, sub: "Écris le mot anglais.", input: true, answers: [w.en.split(" / ")[0], ...E.answerVariants(w.en)], after: w.en }),
+  dictee: w => ({ word: w, img: "", prompt: "🎧", say: w.en, sub: "Écoute et écris ce que tu entends.", replay: true, hint: `${E.img(w)} ${w.fr}`, input: true, answers: [w.en.split(" / ")[0], ...E.answerVariants(w.en)] }),
   vraifaux: w => { const t = Math.random() < 0.5, other = distractors(w, "fr", 1)[0]; return { word: t ? w : null, img: E.img(w), prompt: `${w.en} = ${t ? w.fr : other.fr} ?`, sub: "Vrai ou faux ?", options: ["Vrai", "Faux"], answers: [t ? "Vrai" : "Faux"], fixedOrder: true, explain: `${w.en} = ${w.fr}` }; }
 };
 const verbQ = v => {
@@ -170,7 +191,7 @@ const runQuiz = (gameId, opt) => {
         ${q.prompt ? `<div class="q-prompt">${esc(q.prompt)}</div>` : ""}
         <div class="q-sub">${esc(q.sub || "")}</div>
         ${q.replay || q.say ? `<div class="row" style="justify-content:center">${E.sayBtn(q.say, !!q.replay)}${q.replay ? `<button class="btn small ghost" type="button" data-slow>🐢 Lent</button>` : ""}${q.hint ? `<button class="btn small ghost" type="button" data-hint>💡 Indice</button>` : ""}</div><div id="hint" class="muted"></div>` : ""}
-        ${q.input ? `<form class="answer-input" id="ansForm"><input id="ans" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Ta réponse" placeholder="Ta réponse…"><button class="btn primary" type="submit">OK</button></form><button class="btn small ghost" type="button" id="dunno">Je ne sais pas</button>`
+        ${q.input ? `<form class="answer-input" id="ansForm"><input id="ans" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Ta réponse" placeholder="Ta réponse…"><button class="btn primary" type="submit">OK</button></form><div class="row" style="justify-content:center">${timed ? "" : `<button class="btn small ghost" type="button" id="hintq">💡 Indice</button>`}<button class="btn small ghost" type="button" id="dunno">Je ne sais pas</button></div><div id="hintqOut" class="hint-line mono"></div>`
           : `<div class="opts">${q.options.map((o, k) => `<button class="opt" type="button" data-k="${k}">${esc(o)}</button>`).join("")}</div>`}
         <div id="fb" class="feedback" hidden></div>
       </div>`;
@@ -182,7 +203,7 @@ const runQuiz = (gameId, opt) => {
     locked = true;
     const ok = q.input ? q.answers.some(a => E.checkAnswer(given, a)) : q.answers.includes(given);
     i++;
-    if (ok) { score++; streak++; bestStreak = Math.max(bestStreak, streak); E.sfx("ok"); E.addXp(timed ? 5 : 10, "correct"); }
+    if (ok) { score++; streak++; bestStreak = Math.max(bestStreak, streak); E.sfx("ok"); E.addXp(timed ? 5 : q.hintN ? 5 : 10, "correct"); }
     else { streak = 0; E.sfx("ko"); E.day().wrong = (E.day().wrong || 0) + 1; }
     if (q.word) E.quizTouch(q.word.id, ok);
     recent.push({ ok, q: q.prompt || q.say || "", a: q.answers[0], say: q.after || q.sayAfter || q.say });
@@ -205,6 +226,16 @@ const runQuiz = (gameId, opt) => {
       if (e.target.closest("[data-slow]")) return E.say(q.say, 0.6);
       if (e.target.closest("[data-hint]")) { $("#hint").textContent = q.hint; return; }
       if (e.target.closest("#dunno")) return answer("");
+      if (e.target.closest("#hintq") && !locked) {
+        q.hintN = (q.hintN || 0) + 1;
+        const a = q.answers[0].replace(/\s*\(.*?\)/g, "").replace(/^to\s+/i, "");
+        let shown = 0;
+        const masked = [...a].map(ch => /[a-z]/i.test(ch) ? (shown++ < q.hintN ? ch : "_") : ch).join(" ");
+        $("#hintqOut").textContent = `Indice : ${masked}`;
+        if (q.hintN >= a.replace(/[^a-z]/gi, "").length) $("#hintq").disabled = true;
+        $("#ans")?.focus();
+        return;
+      }
       const o = e.target.closest(".opt[data-k]"); if (o && !o.disabled) answer(q.options[Number(o.dataset.k)]);
     });
     b.addEventListener("submit", e => { e.preventDefault(); const v = $("#ans").value; if (v.trim()) answer(v); });

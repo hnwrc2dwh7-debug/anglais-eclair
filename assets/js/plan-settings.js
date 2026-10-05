@@ -157,11 +157,14 @@ E.route("reglages", anchor => {
     });
     view.addEventListener("click", e => {
       const sg = e.target.closest("[data-seg]");
-      if (sg) { const k = sg.dataset.seg, d = E.DEFAULTS[k]; s[k] = typeof d === "number" ? Number(sg.dataset.v) : sg.dataset.v; $$(`[data-seg="${k}"]`).forEach(b => b.classList.toggle("on", b === sg)); apply(); return; }
+      if (sg) { const k = sg.dataset.seg, d = E.DEFAULTS[k]; s[k] = typeof d === "number" ? Number(sg.dataset.v) : sg.dataset.v; if (k === "theme" && s.bg !== "auto") { s.bg = "auto"; apply(); E.rerender(); return; } $$(`[data-seg="${k}"]`).forEach(b => b.classList.toggle("on", b === sg)); apply(); return; }
+      const bp = e.target.closest("[data-bgpick]");
+      if (bp) { s.bg = bp.dataset.bgpick; apply(); E.rerender(); return; }
       const ac = e.target.closest("[data-swatch]");
       if (ac) { s.accent = ac.dataset.swatch; $$("[data-swatch]").forEach(b => b.classList.toggle("on", b === ac)); apply(); return; }
       const dp = e.target.closest("[data-day]");
       if (dp) { const d = Number(dp.dataset.day), k = s.studyDays.indexOf(d); if (k >= 0) { if (s.studyDays.length > 1) s.studyDays.splice(k, 1); else E.toast("Garde au moins un jour d’étude 😉"); } else s.studyDays.push(d); dp.classList.toggle("on", s.studyDays.includes(d)); apply(); return; }
+      if (e.target.closest("#resetHelp")) { E.state.ui.helpSeen = {}; E.state.ui.welcomed = 0; s.showHelp = true; E.save(); E.toast("Les aides réapparaîtront sur chaque page 💡"); E.rerender(); return; }
       if (e.target.closest("#testVoice")) { E.say("Hello! Welcome to Anglais Éclair. Let's learn English together."); return; }
       if (e.target.closest("#copyData")) {
         const ta = $("#exportBox"); ta.value = E.exportData();
@@ -177,6 +180,8 @@ E.route("reglages", anchor => {
       if (e.target.closest("#cancelReset")) { $("#resetBox").hidden = true; return; }
       if (e.target.closest("#doReset")) { E.resetAll(); E.toast("Tout a été remis à zéro."); E.go("accueil"); return; }
     });
+    $("#set-bgCustom").addEventListener("input", e => { s.bgCustom = e.target.value; s.bg = "perso"; E.save(); E.applySettings(); });
+    $("#set-bgCustom").addEventListener("change", () => E.rerender());
     $("#set-name").addEventListener("input", e => { s.name = e.target.value.slice(0, 30); E.save(); });
     $("#set-reminder")?.addEventListener("input", e => { s.reminder = e.target.value; E.save(); });
     if (anchor) { const el = $("#s-" + anchor); if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 60); }
@@ -213,8 +218,17 @@ E.route("reglages", anchor => {
 
       <section class="card stack" id="s-apparence"><h2>🎨 Apparence</h2>
         <div class="field">Couleurs<div class="swatches">${E.ACCENTS.map(([id, name, a, b]) => `<button type="button" class="swatch${s.accent === id ? " on" : ""}" data-swatch="${id}"><span class="sw-dots"><i style="background:${a}"></i><i style="background:${b}"></i></span>${name}</button>`).join("")}</div></div>
+        <div class="field">Couleur du fond <small>Les fonds sombres passent automatiquement le texte en clair.</small><div class="swatches bg-swatches">${E.BACKGROUNDS.map(([id, name, v]) => {
+          const c = v === "custom" ? E.customBackground(s.bgCustom) : v;
+          const look = c ? `background:${c.bg};color:${c.ink || (c.dark ? "#eef0ff" : "#12142b")};border-color:${s.bg === id ? "var(--accent)" : c.line}` : "";
+          return `<button type="button" class="swatch bg-swatch${s.bg === id ? " on" : ""}" data-bgpick="${id}" style="${look}">${id === "auto" ? "🖥️ " : id === "perso" ? "🎨 " : c?.dark ? "🌙 " : ""}${name}</button>`;
+        }).join("")}</div></div>
         <div class="grid g2">
-          <div class="field">Mode${seg("theme", [["auto", "🖥️ Auto"], ["light", "☀️ Clair"], ["dark", "🌙 Sombre"]])}</div>
+          <label class="field" for="set-bgCustom">Ma couleur de fond <small>Choisis n’importe quelle couleur</small><input type="color" id="set-bgCustom" value="${esc(s.bgCustom)}" style="height:46px;padding:4px"></label>
+          <div class="field">Motif de fond${seg("pattern", [["none", "Aucun"], ["points", "• Points"], ["carreaux", "▦ Carreaux"], ["lignes", "☰ Lignes"], ["cahier", "📓 Cahier"]])}</div>
+        </div>
+        <div class="grid g2">
+          <div class="field">Mode${seg("theme", [["auto", "🖥️ Auto"], ["light", "☀️ Clair"], ["dark", "🌙 Sombre"]])}<small>${s.bg !== "auto" ? "Le mode est décidé par la couleur de fond choisie." : "Auto suit le réglage de ton appareil."}</small></div>
           <div class="field">Taille du texte${seg("size", [["s", "A-"], ["m", "A"], ["l", "A+"], ["xl", "A++"]])}</div>
           <div class="field">Forme des cartes${seg("shape", [["carre", "▢ Carrées"], ["arrondi", "▢ Arrondies"], ["bulle", "◯ Bulles"]])}</div>
           <div class="field">Taille des images${seg("imgSize", [["s", "Petites"], ["m", "Moyennes"], ["l", "Grandes"]])}</div>
@@ -231,6 +245,8 @@ E.route("reglages", anchor => {
           ${sel("flashTime", [30, 60, 90, 120, 180].map(n => [n, `${n} secondes`]), "Chrono des jeux rapides")}
           ${sel("quizLevel", [["all", "Tous les verbes"], ["common", "Sans les verbes rares"]], "Verbes irréguliers en quiz")}
         </div>
+        ${sw("showHelp", "Afficher les aides sur chaque page", "L’encadré « 💡 Comment ça marche ? » en haut des pages")}
+        <div class="row"><button class="btn small ghost" type="button" id="resetHelp">↻ Réafficher toutes les aides et le message de bienvenue</button></div>
         ${sw("showExample", "Montrer les phrases d’exemple", "Sous chaque mot et au dos des cartes")}
         ${sw("autoplay", "Lecture audio automatique", "Les mots sont prononcés dès qu’ils apparaissent")}
         ${sw("strict", "Correction stricte", "Sinon, les accents, majuscules et ponctuation sont ignorés")}

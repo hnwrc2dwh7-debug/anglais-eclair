@@ -39,7 +39,7 @@ E.CATS = [...new Set(E.THEMES.map(t => t.cat))];
 const KEY = "anglais-eclair-v1";
 E.DEFAULTS = {
   name: "", level: "A1", goal: "tout",
-  useDays: false, studyDays: [1, 2, 3, 4, 5, 6], restKeepsStreak: true,
+  bg: "auto", bgCustom: "#e8f3fd", pattern: "none", showHelp: true, useDays: false, studyDays: [1, 2, 3, 4, 5, 6], restKeepsStreak: true,
   dailyXp: 100, newWords: 10, planLength: 30, planStart: E.dayKey(), reminder: "19:00",
   accent: "eclair", theme: "auto", size: "m", font: "moderne", shape: "arrondi", motion: true, imgSize: "m", showImages: true,
   cardDir: "en-fr", showExample: true, quizLen: 10, flashTime: 60, quizLevel: "all", autoplay: true, strict: false, blurFr: false,
@@ -197,14 +197,53 @@ E.ACCENTS = [
   ["bonbon", "Bonbon", "#d83c86", "#5ad1ff"], ["foret", "Forêt", "#2e7d32", "#f2c14e"], ["graphite", "Graphite", "#3b4256", "#f5a524"],
   ["neon", "Néon", "#00a596", "#ff4fd8"], ["cerise", "Cerise", "#b0174a", "#ffd23f"], ["nuit", "Nuit", "#1f3a93", "#ffdd57"]
 ];
+/* Couleurs de fond : clairs, sombres, ou couleur personnalisée. */
+E.BACKGROUNDS = [
+  ["auto", "Automatique", null],
+  ["blanc", "Blanc", { bg: "#ffffff", surface: "#ffffff", s2: "#f0f1f6", line: "#dfe1ea" }],
+  ["papier", "Papier crème", { bg: "#fbf7ee", surface: "#fffdf8", s2: "#f1ead9", line: "#e4d9c2", ink: "#2a2418", muted: "#6b604e" }],
+  ["ciel", "Bleu ciel", { bg: "#e6f2fd", surface: "#f7fbff", s2: "#d7e8f8", line: "#c3dbf0" }],
+  ["menthe", "Vert menthe", { bg: "#e5f6ee", surface: "#f6fcf9", s2: "#d3eedf", line: "#bfe2cf" }],
+  ["rose", "Rose poudré", { bg: "#fceaf1", surface: "#fff8fb", s2: "#f6d8e4", line: "#ecc3d3" }],
+  ["lavande", "Lavande", { bg: "#efeafc", surface: "#faf8ff", s2: "#e1d8f8", line: "#d0c4f0" }],
+  ["peche", "Pêche", { bg: "#fff0e5", surface: "#fffaf6", s2: "#fde0cb", line: "#f3cdb2" }],
+  ["citron", "Citron", { bg: "#fdf8dc", surface: "#fffdf0", s2: "#f6edb9", line: "#eadf9c" }],
+  ["gris", "Gris perle", { bg: "#eceef2", surface: "#f8f9fb", s2: "#e0e3e9", line: "#cfd3dc" }],
+  ["nuit", "Nuit bleue", { dark: true, bg: "#0d0f22", surface: "#161a35", s2: "#1f2447", line: "#2c3263" }],
+  ["noir", "Noir", { dark: true, bg: "#000000", surface: "#121212", s2: "#1d1d1d", line: "#2e2e2e", ink: "#f2f2f2", muted: "#a9a9a9" }],
+  ["ardoise", "Ardoise", { dark: true, bg: "#1d2329", surface: "#262e35", s2: "#303a43", line: "#3d4954", ink: "#eef2f5", muted: "#a8b4bf" }],
+  ["prune", "Prune", { dark: true, bg: "#1f1326", surface: "#2a1b33", s2: "#362342", line: "#4a3157", ink: "#f6eefa", muted: "#c3aed0" }],
+  ["sapin", "Sapin", { dark: true, bg: "#0f1d17", surface: "#172a21", s2: "#1f372b", line: "#2b4a3a", ink: "#eaf6ef", muted: "#a5c4b3" }],
+  ["perso", "Ma couleur", "custom"]
+];
+const hex = h => { const m = String(h).replace("#", ""); const n = parseInt(m.length === 3 ? m.split("").map(x => x + x).join("") : m, 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; };
+const toHex = rgb => "#" + rgb.map(v => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const mix = (a, b, t) => toHex(hex(a).map((v, i) => v + (hex(b)[i] - v) * t));
+const lum = h => { const [r, g, b] = hex(h).map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+E.customBackground = color => {
+  const dark = lum(color) < 0.18;
+  return dark
+    ? { dark, bg: color, surface: mix(color, "#ffffff", 0.07), s2: mix(color, "#ffffff", 0.13), line: mix(color, "#ffffff", 0.22), ink: "#f3f4ff", muted: mix(color, "#ffffff", 0.7) }
+    : { dark, bg: color, surface: mix(color, "#ffffff", 0.75), s2: mix(color, "#000000", 0.05), line: mix(color, "#000000", 0.13), ink: "#12142b", muted: "#4f546d" };
+};
 const root = document.documentElement;
 const hostTheme = root.getAttribute("data-theme");
 E.applySettings = () => {
   const s = E.S();
   const set = (k, v, def) => { if (v === def || v === true && def === undefined) root.removeAttribute("data-" + k); else root.setAttribute("data-" + k, v); };
   set("accent", s.accent, "eclair");
-  if (s.theme === "auto") { if (hostTheme) root.setAttribute("data-theme", hostTheme); else root.removeAttribute("data-theme"); }
+  const preset = E.BACKGROUNDS.find(b => b[0] === s.bg);
+  const bg = !preset || !preset[2] ? null : preset[2] === "custom" ? E.customBackground(s.bgCustom || "#e8f3fd") : preset[2];
+  ["--bg", "--surface", "--surface-2", "--line", "--ink", "--muted"].forEach(p => root.style.removeProperty(p));
+  if (bg) {
+    /* Un fond choisi impose son mode clair ou sombre. */
+    root.setAttribute("data-theme", bg.dark ? "dark" : "light");
+    root.style.setProperty("--bg", bg.bg); root.style.setProperty("--surface", bg.surface); root.style.setProperty("--surface-2", bg.s2); root.style.setProperty("--line", bg.line);
+    if (bg.ink) root.style.setProperty("--ink", bg.ink);
+    if (bg.muted) root.style.setProperty("--muted", bg.muted);
+  } else if (s.theme === "auto") { if (hostTheme) root.setAttribute("data-theme", hostTheme); else root.removeAttribute("data-theme"); }
   else root.setAttribute("data-theme", s.theme);
+  set("pattern", s.pattern, "none");
   set("size", s.size, "m"); set("font", s.font, "moderne"); set("shape", s.shape, "arrondi"); set("img", s.imgSize, "m");
   if (s.motion) root.removeAttribute("data-motion"); else root.setAttribute("data-motion", "off");
   const acc = E.ACCENTS.find(a => a[0] === s.accent) || E.ACCENTS[0];
@@ -215,10 +254,10 @@ E.img = w => E.S().showImages ? (w.img || "") : "";
 /* ---------- Menus ---------- */
 E.MENU = [
   { label: "Apprendre", items: [
-    ["vocabulaire", "🧠", "Vocabulaire en images", "50 thèmes, plus de 1 500 mots"],
+    ["vocabulaire", "🧠", "Vocabulaire en images", `${E.THEMES.length} thèmes, ${E.WORDS.length.toLocaleString("fr-FR")} mots`],
     ["temps", "⏳", "Les 12 temps", "Tableau, frises, exercices"],
     ["grammaire", "📐", "Grammaire", "Conditionnels, modaux, passif…"],
-    ["verbes", "🔁", "Verbes irréguliers", "190 verbes à écouter"],
+    ["verbes", "🔁", "Verbes irréguliers", `${(window.IRREGULARS || []).length} verbes + la fiche du cours`],
     ["conjugueur", "🧩", "Conjugueur", "Un verbe, tous les temps"],
     ["histoires", "📖", "Petites histoires", "Lire et écouter, A1 → B2"]] },
   { label: "S’entraîner", items: [
@@ -240,6 +279,8 @@ E.MENU = [
     ["stats", "📊", "Mes progrès", "Série, points, maîtrise"],
     ["favoris", "⭐", "Mes favoris", "Tes mots mis de côté"],
     ["reglages", "⚙️", "Réglages", "Couleurs, voix, rythme…"],
+    ["partager", "📲", "Partager le site", "QR code et lien à envoyer"],
+    ["aide", "❓", "Aide", "Mode d’emploi et questions fréquentes"],
     ["enseignants", "🍎", "Pour les enseignants", "Contenus, méthode, confidentialité"]] }
 ];
 const menuItem = ([href, ico, title, sub]) => `<a class="menu-item" href="#${href}" data-href="${href}"><span class="mi-ico" aria-hidden="true">${ico}</span><span><b>${E.esc(title)}</b><small>${E.esc(sub)}</small></span></a>`;
@@ -283,7 +324,8 @@ E.render = () => {
   if (!routes[name]) { name = "accueil"; param = ""; }
   E.current = name;
   const app = E.$("#app");
-  app.innerHTML = `<div class="view">${routes[name].fn(param) || ""}</div>`;
+  const help = E.helpBox ? E.helpBox(name, param) : "";
+  app.innerHTML = `<div class="view">${help}${routes[name].fn(param) || ""}</div>`;
   document.title = routes[name].title ? `${typeof routes[name].title === "function" ? routes[name].title(param) : routes[name].title} · Anglais Éclair` : "Anglais Éclair";
   E.$$("[data-href]").forEach(a => a.classList.toggle("current", a.dataset.href === h || a.dataset.href === name));
   E.$$("[data-tab]").forEach(a => a.classList.toggle("current", a.dataset.tab === name || (name === "theme" && a.dataset.tab === "vocabulaire") || (["jeu"].includes(name) && a.dataset.tab === "jeux")));

@@ -72,7 +72,8 @@ E.route("accueil", () => {
     <div class="ring-wrap">${ring(pct, d.xp, `sur ${goal} points`)}</div>
   </section>
 
-  ${!Object.keys(E.state.srs).length && !E.state.ui.testDone ? `<section class="card row between" style="background:var(--spark-soft)"><span><b>🎓 Première visite ?</b> Fais le test de niveau (3 minutes) : le site choisira les bons mots pour toi.</span><a class="btn primary" href="#test">Faire le test →</a></section>` : ""}
+  ${E.welcomeBox ? E.welcomeBox() : ""}
+  ${E.state.ui.welcomed && !Object.keys(E.state.srs).length && !E.state.ui.testDone ? `<section class="card row between" style="background:var(--spark-soft)"><span><b>🎓 Première visite ?</b> Fais le test de niveau (3 minutes) : le site choisira les bons mots pour toi.</span><a class="btn primary" href="#test">Faire le test →</a></section>` : ""}
   <div class="stat-row">
     <div class="stat"><span class="s-ico">🔥</span><b>${E.streak()}</b><span>jours de suite</span></div>
     <div class="stat"><span class="s-ico">🧠</span><b>${mastered}</b><span>mots maîtrisés · ${started} vus</span></div>

@@ -1,7 +1,7 @@
 /* Anglais Éclair — fonctionnement hors connexion. */
-const CACHE = "anglais-eclair-v4";
+const CACHE = "anglais-eclair-v5";
 const FILES = [
-  "./", "./index.html", "./manifest.webmanifest", "./assets/icon.svg", "./assets/css/style.css",
+  "./", "./index.html", "./manifest.webmanifest", "./assets/icon.svg", "./assets/css/fonts.css", "./assets/css/style.css",
   "./assets/js/data/vocab-1.js", "./assets/js/data/vocab-2.js", "./assets/js/data/vocab-3.js", "./assets/js/data/vocab-4.js", "./assets/js/data/vocab-5.js",
   "./assets/js/data/grammar.js", "./assets/js/data/stories.js", "./assets/js/views-stories.js", "./assets/js/data/verbs.js", "./assets/js/data/expressions.js",
   "./assets/js/core.js", "./assets/js/views-learn.js", "./assets/js/views-grammar.js", "./assets/js/views-more.js",
@@ -16,7 +16,7 @@ self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
   e.respondWith(
     fetch(e.request).then(res => {
-      if (res.ok && (e.request.url.startsWith(self.location.origin) || e.request.url.includes("fonts.g"))) {
+      if (res.ok && (e.request.url.startsWith(self.location.origin))) {
         const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy));
       }
       return res;

@@ -62,7 +62,10 @@ E.exportData = () => JSON.stringify(E.state);
 E.importData = txt => {
   const data = JSON.parse(txt);
   if (!data || typeof data !== "object" || !data.settings) throw new Error("format");
-  E.state = { ...fresh(), ...data, settings: { ...E.DEFAULTS, ...data.settings } };
+  const clean = {};
+  for (const [k, v] of Object.entries(data.settings)) if (k in E.DEFAULTS && typeof v === typeof E.DEFAULTS[k] && Array.isArray(v) === Array.isArray(E.DEFAULTS[k])) clean[k] = v;
+  if (Array.isArray(clean.studyDays)) clean.studyDays = clean.studyDays.filter(d => Number.isInteger(d) && d >= 0 && d <= 6);
+  E.state = { ...fresh(), ...data, settings: { ...E.DEFAULTS, ...clean } };
   E.save(); E.applySettings(); E.updatePills();
 };
 
@@ -233,6 +236,7 @@ E.applySettings = () => {
   const set = (k, v, def) => { if (v === def || v === true && def === undefined) root.removeAttribute("data-" + k); else root.setAttribute("data-" + k, v); };
   set("accent", s.accent, "eclair");
   const preset = E.BACKGROUNDS.find(b => b[0] === s.bg);
+  if (!/^#[0-9a-f]{6}$/i.test(s.bgCustom || "")) s.bgCustom = "#e8f3fd";
   const bg = !preset || !preset[2] ? null : preset[2] === "custom" ? E.customBackground(s.bgCustom || "#e8f3fd") : preset[2];
   ["--bg", "--surface", "--surface-2", "--line", "--ink", "--muted"].forEach(p => root.style.removeProperty(p));
   if (bg) {

@@ -139,7 +139,7 @@ E.route("enseignants", () => {
       </ul></section>
   </div>
   <section class="card stack"><h2>🔒 Données & confidentialité</h2>
-    <p>Aucune inscription, aucune adresse e-mail, aucun cookie publicitaire, aucun outil de mesure d’audience. Les progrès de chaque élève restent uniquement dans le navigateur de son appareil. La voix utilisée est celle de l’appareil (synthèse vocale du système). Le site fonctionne aussi hors connexion.</p></section>
+    <p>Aucune inscription, aucune adresse e-mail, aucun cookie publicitaire, aucun outil de mesure d’audience. Les progrès de chaque élève restent uniquement dans le navigateur de son appareil. La voix utilisée est celle de l’appareil (synthèse vocale du système). Les polices et tous les fichiers sont hébergés sur le site lui-même : aucune connexion vers un service extérieur (ni Google, ni réseau social). Le site est servi en HTTPS et fonctionne aussi hors connexion.</p></section>
   <section class="card stack"><h2>🧑‍🏫 Idées d’utilisation en classe</h2>
     <ul class="list-clean">
       <li>Projeter un thème illustré et faire répéter les mots avec le bouton 🔊.</li>

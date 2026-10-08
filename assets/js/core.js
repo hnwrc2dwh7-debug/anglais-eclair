@@ -39,7 +39,7 @@ E.CATS = [...new Set(E.THEMES.map(t => t.cat))];
 const KEY = "anglais-eclair-v1";
 E.DEFAULTS = {
   name: "", level: "A1", goal: "tout",
-  bg: "auto", bgCustom: "#e8f3fd", pattern: "none", showHelp: true, useDays: false, studyDays: [1, 2, 3, 4, 5, 6], restKeepsStreak: true,
+  mode: "eleve", bg: "auto", bgCustom: "#e8f3fd", pattern: "none", showHelp: true, useDays: false, studyDays: [1, 2, 3, 4, 5, 6], restKeepsStreak: true,
   dailyXp: 100, newWords: 10, planLength: 30, planStart: E.dayKey(), reminder: "19:00",
   accent: "eclair", theme: "auto", size: "m", font: "moderne", shape: "arrondi", motion: true, imgSize: "m", showImages: true,
   cardDir: "en-fr", showExample: true, quizLen: 10, flashTime: 60, quizLevel: "all", autoplay: true, strict: false, blurFr: false,
@@ -248,6 +248,7 @@ E.applySettings = () => {
   } else if (s.theme === "auto") { if (hostTheme) root.setAttribute("data-theme", hostTheme); else root.removeAttribute("data-theme"); }
   else root.setAttribute("data-theme", s.theme);
   set("pattern", s.pattern, "none");
+  root.setAttribute("data-mode", s.mode === "prof" ? "prof" : "eleve");
   set("size", s.size, "m"); set("font", s.font, "moderne"); set("shape", s.shape, "arrondi"); set("img", s.imgSize, "m");
   if (s.motion) root.removeAttribute("data-motion"); else root.setAttribute("data-motion", "off");
   const acc = E.ACCENTS.find(a => a[0] === s.accent) || E.ACCENTS[0];
@@ -267,6 +268,7 @@ E.MENU = [
   { label: "S’entraîner", items: [
     ["revisions", "🗂️", "Révisions du jour", "Les mots à revoir aujourd’hui"],
     ["apprendre", "✨", "Nouveaux mots du jour", "Ta dose quotidienne"],
+    ["fiches", "📝", "Fiches d’exercices", "Phrases à compléter + corrigé, mode tableau"],
     ["jeux", "🎮", "Jeux & quiz", "17 façons de s’entraîner"],
     ["jeu-eclair", "⚡", "Défi éclair", "Un max de points en 60 s"],
     ["jeu-dictee", "🎧", "Dictée", "Écoute, puis écris"]] },
@@ -366,6 +368,7 @@ E.planDayIndexFor = () => null;
 E.start = () => {
   E.applySettings();
   E.renderMenus();
+  E.updateModeBtn && E.updateModeBtn();
   E.$("#burger").addEventListener("click", E.openDrawer);
   E.$("#drawerClose").addEventListener("click", E.closeDrawer);
   E.$("#drawerBackdrop").addEventListener("click", E.closeDrawer);

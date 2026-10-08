@@ -157,6 +157,7 @@ E.route("reglages", anchor => {
     });
     view.addEventListener("click", e => {
       const sg = e.target.closest("[data-seg]");
+      if (sg && sg.dataset.seg === "mode") { E.setMode(sg.dataset.v); return; }
       if (sg) { const k = sg.dataset.seg, d = E.DEFAULTS[k]; s[k] = typeof d === "number" ? Number(sg.dataset.v) : sg.dataset.v; if (k === "theme" && s.bg !== "auto") { s.bg = "auto"; apply(); E.rerender(); return; } $$(`[data-seg="${k}"]`).forEach(b => b.classList.toggle("on", b === sg)); apply(); return; }
       const bp = e.target.closest("[data-bgpick]");
       if (bp) { s.bg = bp.dataset.bgpick; apply(); E.rerender(); return; }
@@ -194,6 +195,7 @@ E.route("reglages", anchor => {
     </nav>
     <div class="stack" style="gap:18px">
       <section class="card stack" id="s-profil"><h2>👤 Profil</h2>
+        <div class="field">Je suis${seg("mode", [["eleve", "🎒 Élève"], ["prof", "🍎 Enseignant(e)"]])}<small>Le mode enseignant affiche un espace prof à l’accueil (tableau, fiches, corrigés).</small></div>
         <div class="grid g3">
           <label class="field" for="set-name">Ton prénom<input id="set-name" type="text" value="${esc(s.name)}" placeholder="ex. Tom" maxlength="30" autocomplete="given-name"></label>
           ${sel("level", E.LEVELS.map(l => [l, `${l} · ${E.LEVEL_NAMES[l]}`]), "Ton niveau", "Adapte les mots proposés")}

@@ -32,6 +32,8 @@ E.HELP = {
   histoire: ["« Tout écouter » lit l’histoire en surlignant la phrase en cours.", "Cache la traduction pour te tester ; touche une phrase pour voir son sens.", "Réponds aux 3 questions en bas de page."],
   test: ["22 questions, de plus en plus difficiles. Si tu ne sais pas, dis-le : c’est plus juste.", "À la fin, applique le niveau trouvé : le site s’adapte."],
   recherche: ["Tape un mot en anglais ou en français (au moins 2 lettres).", "Les résultats couvrent les mots, verbes, phrases, expressions et faux amis."],
+  fiches: ["Choisis un type d’exercice, puis une option (verbes de la fiche, un temps, un thème…) et la longueur.", "Chaque fiche a un numéro de 1 à 9 999 : le même numéro redonne exactement les mêmes phrases.", "« Mode tableau » projette la fiche en grand, phrase par phrase, avec la correction à révéler."],
+  fiche: ["Écris tes réponses dans les cases, puis « Corriger ma fiche » : les erreurs s’affichent en rouge avec la bonne réponse.", "« Mode tableau » : une phrase à la fois en grand, Espace pour afficher la réponse.", "Tu peux imprimer la fiche et son corrigé."],
   partager: ["Montre le QR code : on le scanne avec l’appareil photo d’un téléphone.", "Ou copie le lien pour l’envoyer par message."]
 };
 
@@ -51,6 +53,7 @@ E.helpBox = (name, param) => {
 /* Message de bienvenue (première visite). */
 E.welcomeBox = () => E.state.ui.welcomed ? "" : `<section class="card welcome stack" id="welcome">
   <div class="row between"><h2>👋 Bienvenue sur Anglais Éclair !</h2><button class="btn small ghost" type="button" data-welcome-close>Fermer ✕</button></div>
+  <div class="mode-pick"><b>Tu es :</b><button class="btn primary" type="button" data-setmode="eleve">🎒 Élève</button><button class="btn" type="button" data-setmode="prof">🍎 Enseignant(e)</button><span class="muted">Tu pourras changer à tout moment avec le bouton en haut de l’écran.</span></div>
   <p>Le site est gratuit, sans compte et sans publicité. Tes progrès restent sur ton appareil. Pour bien démarrer :</p>
   <div class="grid g3">
     <a class="tile" href="#test"><span class="t-emoji">🎓</span><b>1. Test de niveau</b><small>3 minutes pour adapter le site à toi</small></a>
@@ -67,7 +70,7 @@ document.addEventListener("click", e => {
 const NAMES = {
   accueil: "🏠 Accueil", vocabulaire: "🧠 Vocabulaire", theme: "🖼️ Un thème", apprendre: "✨ Nouveaux mots", cartes: "🃏 Cartes mémoire", revisions: "🗂️ Révisions",
   temps: "⏳ Les 12 temps", lecon: "📐 Une leçon", grammaire: "📐 Grammaire", conjugueur: "🧩 Conjugueur", verbes: "🔁 Verbes irréguliers",
-  jeux: "🎮 Jeux", jeu: "🎯 Pendant un jeu", histoires: "📖 Histoires", histoire: "📖 Une histoire", test: "🎓 Test de niveau",
+  fiches: "📝 Fiches d’exercices", fiche: "📄 Une fiche", jeux: "🎮 Jeux", jeu: "🎯 Pendant un jeu", histoires: "📖 Histoires", histoire: "📖 Une histoire", test: "🎓 Test de niveau",
   phrases: "💬 Phrases utiles", phrasal: "🧲 Phrasal verbs", idiomes: "🦄 Expressions", fauxamis: "🪤 Faux amis", familier: "😎 Anglais familier", prononciation: "👄 Prononciation",
   programme: "📅 Programme", stats: "📊 Mes progrès", favoris: "⭐ Favoris", reglages: "⚙️ Réglages", recherche: "🔎 Recherche", partager: "📲 Partager"
 };
@@ -77,6 +80,7 @@ const FAQ = [
   ["Je n’entends pas les mots.", "Monte le volume et vérifie que le téléphone n’est pas en mode silencieux (sur iPhone, l’interrupteur latéral). Dans Réglages → Voix, touche « Tester la voix » ou choisis une autre voix."],
   ["Comment gagner des points ?", "Chaque bonne réponse, carte révisée, leçon ou partie de jeu rapporte des points. L’objectif du jour (100 points par défaut) se règle dans Réglages ; il est seulement indicatif."],
   ["Que veut dire « maîtrisé » ?", "Un mot est maîtrisé quand tu l’as reconnu plusieurs fois de suite dans les révisions (boîte 4 sur 7)."],
+  ["C’est quoi le mode élève et le mode enseignant ?", "Le mode élève (par défaut) montre les points, la séance du jour et les jeux. Le mode enseignant transforme l’accueil en espace prof : projection d’exercices au tableau, fiches et corrigés à imprimer. On change avec le bouton 🎒 / 🍎 en haut de l’écran."],
   ["Je dois étudier certains jours ?", "Non. Par défaut, il n’y a aucun jour imposé. Le programme par jours est une option, à activer seulement si tu veux un plan guidé."],
   ["Ça marche sans internet ?", "Oui : après une première visite, le site s’ouvre hors connexion. Tu peux aussi l’installer comme une appli (Partager → Sur l’écran d’accueil sur iPhone, menu ⋮ → Installer sur Android)."],
   ["La correction refuse ma réponse alors qu’elle est juste.", "Les formes courtes (don’t, I’m) et longues (do not, I am) sont acceptées. Si tu as activé « Correction stricte », les accents et majuscules comptent : désactive-la dans Réglages → Apprentissage."]

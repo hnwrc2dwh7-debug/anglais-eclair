@@ -13,6 +13,9 @@ Un site complet pour apprendre l’anglais vite, **gratuit, sans compte, sans IA
 - **17 jeux** : image → mot, dictée, défi éclair 60 s, vrai/faux, memory, pendu, mot mélangé, quiz des temps…
 - **Cartes mémoire avec répétition espacée** (révisions du jour)
 - **Programme jour par jour facultatif** (7 à 180 jours) selon **tes jours d’étude**, désactivé par défaut
+- **Mode élève / mode enseignant** : bouton visible en haut de chaque page (élève par défaut). En mode enseignant, l’accueil devient un espace classe : projection au tableau, fiches à imprimer, corrigés affichés directement
+- **Fiches d’exercices à compléter** : 8 types (prétérit, participe passé, tableau des verbes, conjugaison à un temps donné, mélange des temps, phrases à transformer, vocabulaire, grammaire), 9 999 fiches numérotées par type et par choix, de 5 à 30 questions, correction automatique, corrigé, impression de la fiche et du corrigé
+- **Mode tableau** : une phrase à la fois en grand sur fond d’ardoise, barre d’espace pour révéler la réponse, flèches pour avancer, plein écran
 - **Page pour les enseignants** : contenus par niveau CECRL, méthode, confidentialité, idées d’utilisation en classe
 - **Réglages** : 12 couleurs principales, 15 couleurs de fond (clairs et sombres) + couleur personnalisée, motifs (points, carreaux, lignes, cahier), mode sombre, polices, taille du texte, voix (UK, US, AU…), vitesse, etc.
 - **Aides partout** : encadré « Comment ça marche ? » sur chaque page, page Aide (FAQ, lexique, raccourcis), message de bienvenue, indices dans les exercices

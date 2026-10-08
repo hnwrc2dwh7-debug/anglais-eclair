@@ -43,6 +43,7 @@ E.todayTasks = () => {
   return tasks.filter(t => !t.skip);
 };
 E.route("accueil", () => {
+  if (E.S().mode === "prof" && E.teacherHome) return E.teacherHome();
   const s = E.S(), d = E.day(), t = E.today();
   const goal = s.dailyXp, pct = d.xp / goal;
   const due = E.dueIds().length;
